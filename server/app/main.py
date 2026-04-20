@@ -77,6 +77,48 @@ async def startup_event():
             logging.info("Administrative Node Successfully Synchronized.")
             
             # --- Institutional Data Seed Protocol: Eliminating 0 Data Nodes ---
+            requested_users = [
+                {
+                    "email": "std.global.2026@aiml.edu",
+                    "password": "Std@Edu2026",
+                    "role": models.UserRole.STUDENT,
+                    "full_name": "Global Student Demo",
+                    "profile_data": {
+                        "roll_number": "737626AIML001",
+                        "department": "AIML",
+                        "year": 1
+                    }
+                },
+                {
+                    "email": "staff.global.2026@cse.edu",
+                    "password": "Stf@Edu2026",
+                    "role": models.UserRole.FACULTY,
+                    "full_name": "Global Staff Demo",
+                    "profile_data": {
+                        "staff_id": "STF-CSE-GLOBAL",
+                        "department": "CSE",
+                        "designation": "Professor"
+                    }
+                }
+            ]
+
+            for u_info in requested_users:
+                u = db.query(models.User).filter(models.User.email == u_info["email"]).first()
+                if not u:
+                    u = models.User(
+                        email=u_info["email"],
+                        hashed_password=auth_utils.get_password_hash(u_info["password"]),
+                        role=u_info["role"],
+                        full_name=u_info["full_name"],
+                        is_active=True
+                    )
+                    db.add(u)
+                    db.flush()
+                    if u_info["role"] == models.UserRole.STUDENT:
+                        db.add(models.Student(user_id=u.id, **u_info["profile_data"]))
+                    elif u_info["role"] == models.UserRole.FACULTY:
+                        db.add(models.Staff(user_id=u.id, **u_info["profile_data"]))
+
             if db.query(models.Student).count() == 0:
                 logging.info("Institutional Repository Empty. Commencing High-Density Data Synthesis...")
                 
