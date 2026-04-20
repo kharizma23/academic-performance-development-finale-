@@ -36,7 +36,7 @@ export default function DepartmentCommandCenter() {
     
     const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
     const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
-    return `http://${apiHost}:8000${path}`;
+    return `http://${apiHost}:8001${path}`;
   };
 
   const fetchData = async () => {
@@ -153,8 +153,8 @@ export default function DepartmentCommandCenter() {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-5 pb-8 border-b-8 border-slate-200/50">
         <div className="flex items-center gap-5">
-          <Button onClick={() => router.push('/admin/academic-intelligence')} variant="outline" className="h-10 w-10 rounded-2xl border-4 text-slate-400 hover:text-slate-900 shadow-sm">
-            <ArrowLeft className="h-8 w-8" />
+          <Button onClick={() => router.push('/admin/academic-intelligence')} variant="outline" className="h-10 w-10 rounded-2xl border-2 border-slate-200 bg-white text-indigo-600 hover:bg-indigo-50 hover:text-indigo-800 shadow-md">
+            <ArrowLeft className="h-6 w-6" />
           </Button>
           <div className="h-8 w-8 bg-indigo-600 text-white rounded-xl flex items-center justify-center shadow-2xl border-2 border-white">
             <Building2 className="h-12 w-12" />

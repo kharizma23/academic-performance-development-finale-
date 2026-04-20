@@ -91,7 +91,7 @@ export default function FacultyComparison({ facultyList }: Props) {
     <Button
       onClick={handleCompare}
       disabled={loading}
-      className="mt-4 w-full bg-slate-900 hover:bg-slate-800 text-white h-9 rounded-lg font-black uppercase tracking-widest text-[9px] transition-all flex items-center justify-center gap-2 disabled:opacity-50 border-none"
+      className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white h-9 rounded-lg font-black uppercase tracking-widest text-[9px] transition-all flex items-center justify-center gap-2 disabled:opacity-50 border-none shadow-sm"
     >
       {loading ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <GitCompare className="h-3.5 w-3.5" />}
       {loading ? "Analyzing..." : "Run Analysis"}

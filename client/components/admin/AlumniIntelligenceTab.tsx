@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function AlumniIntelligenceTab() {
   const [data, setData] = useState<any>(null);
@@ -14,7 +15,7 @@ export default function AlumniIntelligenceTab() {
   const getApiUrl = (path: string) => {
     const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
     const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
-    return `http://${apiHost}:8000${path}`;
+    return `http://${apiHost}:8001${path}`;
   };
 
   useEffect(() => {
@@ -99,7 +100,7 @@ export default function AlumniIntelligenceTab() {
               <Card key={i} className="p-4 rounded-xl border border-slate-100 bg-white shadow-sm hover:border-emerald-100 transition-all cursor-pointer">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="h-10 w-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg shadow-sm border border-emerald-100">
-                    {alumnus.name[0]}
+                    {(alumnus.name || "A")[0]}
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-black text-slate-900 uppercase truncate">{alumnus.name}</p>
@@ -148,19 +149,19 @@ export default function AlumniIntelligenceTab() {
         </Card>
       </div>
 
-      <Card className="p-6 rounded-xl bg-slate-900 border border-slate-800 shadow-md relative overflow-hidden text-white flex flex-col md:flex-row items-center justify-between gap-6 group">
+      <Card className="p-6 rounded-xl bg-emerald-600 border border-emerald-500 shadow-lg relative overflow-hidden text-white flex flex-col md:flex-row items-center justify-between gap-6 group shadow-emerald-100">
         <div className="space-y-4 max-w-4xl relative z-10 text-center md:text-left">
-          <div className="h-10 w-10 bg-emerald-600 rounded-lg flex items-center justify-center border border-white/20 shadow-sm mx-auto md:mx-0">
+          <div className="h-10 w-10 bg-white/10 rounded-lg flex items-center justify-center border border-white/20 shadow-sm mx-auto md:mx-0">
             <Globe className="h-5 w-5 text-white" />
           </div>
           <h3 className="text-xl font-black uppercase tracking-tight leading-none">Global Strategic Alignment</h3>
-          <p className="text-slate-400 font-semibold text-xs leading-relaxed uppercase">AI mapping current alumni success metrics against academic nodes in real-time.</p>
+          <p className="text-emerald-50 font-semibold text-xs leading-relaxed uppercase">AI mapping current alumni success metrics against academic nodes in real-time.</p>
         </div>
         <div className="flex flex-col gap-3 shrink-0 relative z-10 w-full md:w-auto">
-          <Button className="bg-white text-slate-900 rounded-lg px-8 h-10 font-bold uppercase text-xs tracking-widest hover:bg-emerald-500 hover:text-white transition-all duration-300">
+          <Button className="bg-white text-emerald-700 rounded-lg px-8 h-10 font-bold uppercase text-xs tracking-widest hover:bg-emerald-50 hover:text-emerald-800 transition-all duration-300 border-none shadow-sm shadow-emerald-700/20">
             ROI Audit Hub
           </Button>
-          <button className="text-[10px] font-bold uppercase text-emerald-400 tracking-widest hover:text-white transition-colors duration-300">
+          <button className="text-[10px] font-bold uppercase text-emerald-100 tracking-widest hover:text-white transition-colors duration-300">
             View Placement Map
           </button>
         </div>

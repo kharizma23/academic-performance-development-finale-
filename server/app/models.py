@@ -48,6 +48,7 @@ class Student(Base):
     personal_phone = Column(String, nullable=True)
     personal_email = Column(String, nullable=True)
     previous_school = Column(String, nullable=True)
+    cutoff_12th = Column(Float, nullable=True)
     
     current_cgpa = Column(Float, default=0.0)
     academic_dna_score = Column(Float, default=0.0)
@@ -99,7 +100,8 @@ class Student(Base):
 
     @property
     def name(self):
-        return self.user.full_name if self.user else None
+        return self.user.full_name if self.user else "Student"
+
 
 class AcademicRecord(Base):
     __tablename__ = "academic_records"
@@ -317,6 +319,9 @@ class AIAssessment(Base):
     difficulty = Column(String, default="Medium")
     duration = Column(String, default="30m")
     status = Column(String, default="Assigned") # Assigned, Completed
+    faculty_id = Column(String, ForeignKey("users.id"), nullable=True)
+    department = Column(String, nullable=True)
+    year = Column(Integer, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     
     questions = relationship("AIAssessmentQuestion", back_populates="assessment")

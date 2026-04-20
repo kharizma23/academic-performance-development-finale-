@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import {
- ChevronLeft, Mail, BookOpen, Award, AlertTriangle, Activity,
- TrendingUp, MessageSquare, ThumbsUp, ThumbsDown, Clock, Star
-} from "lucide-react";
+ import {
+  ChevronLeft, Mail, BookOpen, Award, AlertTriangle, Activity,
+  TrendingUp, MessageSquare, ThumbsUp, ThumbsDown, Clock, Star, Lock, Eye, EyeOff
+ } from "lucide-react";
 import {
  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
  PieChart, Pie, LineChart, Line, CartesianGrid, Legend
@@ -22,9 +22,10 @@ interface Props {
 export default function FacultyDetailView({ facultyId, onBack }: Props) {
  const [faculty, setFaculty] = React.useState<any>(null);
  const [loading, setLoading] = React.useState(true);
- const [showModal, setShowModal] = React.useState(false);
- const [intType, setIntType] = React.useState("Training");
- const [description, setDescription] = React.useState("");
+  const [showModal, setShowModal] = React.useState(false);
+  const [intType, setIntType] = React.useState("Training");
+  const [description, setDescription] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
 
  useEffect(() => {
  setLoading(true);
@@ -58,7 +59,7 @@ export default function FacultyDetailView({ facultyId, onBack }: Props) {
  <div className="space-y-6 animate-in fade-in duration-700">
   {/* Header Section */}
   <div className="flex items-center gap-4 border-b border-slate-100 pb-4">
-    <Button variant="outline" size="sm" onClick={onBack} className="h-8 w-8 p-0 rounded-lg shrink-0">
+    <Button variant="outline" size="sm" onClick={onBack} className="h-8 w-8 p-0 rounded-lg shrink-0 bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:text-emerald-600 shadow-sm relative z-50">
       <ChevronLeft className="h-4 w-4" />
     </Button>
     <div className="space-y-0.5 min-w-0">
@@ -90,8 +91,24 @@ export default function FacultyDetailView({ facultyId, onBack }: Props) {
           </div>
 
           <div className="w-full mt-6 space-y-2">
+            <div className="flex items-center gap-2.5 text-slate-600 font-bold text-[9px] bg-slate-50/50 p-2.5 rounded-lg border border-transparent hover:border-slate-100 truncate">
+              <Mail className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+              <span className="truncate lowercase">{(faculty.user?.institutional_email || faculty.email || `${facultyId}@college.edu`).toLowerCase()}</span>
+            </div>
+            
+            <div className="flex items-center justify-between text-slate-600 font-bold text-[9px] bg-slate-50/50 p-2.5 rounded-lg border border-transparent hover:border-slate-100 truncate">
+              <div className="flex items-center gap-2.5 truncate">
+                <Lock className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                <span className="truncate normal-case">
+                  🔑 Password: {showPassword ? (faculty.user?.plain_password || `${faculty.name?.split(' ')[0] || 'Staff'}@2026`) : "••••••••"}
+                </span>
+              </div>
+              <button onClick={() => setShowPassword(!showPassword)} className="ml-2 text-slate-400 hover:text-emerald-600 focus:outline-none shrink-0" title="Toggle Password Visibility">
+                {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
+              </button>
+            </div>
+            
             {[
-              { icon: Mail, label: faculty.email || `${facultyId}@college.edu` },
               { icon: BookOpen, label: `Expertise: ${faculty.primary_skill || "Eng"}` },
               { icon: Award, label: `Proj: ${faculty.projects_completed} | Pub: ${faculty.publications_count}` }
             ].map((item, i) => (
@@ -105,7 +122,7 @@ export default function FacultyDetailView({ facultyId, onBack }: Props) {
       </Card>
 
       {/* Workload */}
-      <Card className="bg-slate-900 p-6 rounded-xl shadow-md text-white border-none">
+      <Card className="bg-indigo-600 p-6 rounded-xl shadow-lg shadow-indigo-100 text-white border-none">
         <div className="flex items-center gap-2 mb-4">
           <Clock className="h-3.5 w-3.5 text-emerald-500" />
           <h3 className="text-[10px] font-black uppercase tracking-widest">Workload Analysis</h3>
@@ -221,8 +238,8 @@ export default function FacultyDetailView({ facultyId, onBack }: Props) {
             <h2 className="text-[11px] font-black uppercase text-slate-900">Neural Sentiment Feed</h2>
             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Institutional Stream Processor</p>
           </div>
-          <div className="bg-slate-900 text-white px-4 py-2 rounded-lg flex items-center gap-2.5 shadow-sm">
-            <MessageSquare size={14} className="text-emerald-500" />
+          <div className="bg-indigo-600 text-white px-4 py-2 rounded-lg flex items-center gap-2.5 shadow-sm shadow-indigo-100">
+            <MessageSquare size={14} className="text-emerald-300" />
             <span className="text-[10px] font-black uppercase">{faculty.feedback_analytics?.total_reviews ?? 0} NODES</span>
           </div>
         </div>
@@ -274,28 +291,28 @@ export default function FacultyDetailView({ facultyId, onBack }: Props) {
   {/* Intervention Modal */}
   {showModal && (
     <div className="fixed inset-0 bg-slate-900/80 flex items-center justify-center p-6 z-[200] backdrop-blur-sm">
-      <Card className="p-6 rounded-xl w-full max-w-sm shadow-2xl border border-slate-800 bg-slate-900 text-white animate-in zoom-in-95">
-        <h2 className="text-sm font-black uppercase text-white mb-1.5 text-center">Institutional Intervention</h2>
-        <p className="text-[9px] font-bold text-slate-400 mb-6 text-center uppercase tracking-widest">Faculty: {faculty.name}</p>
+      <Card className="p-6 rounded-xl w-full max-w-sm shadow-2xl border border-slate-100 bg-white text-slate-900 animate-in zoom-in-95">
+        <h2 className="text-sm font-black uppercase text-slate-900 mb-1.5 text-center">Institutional Intervention</h2>
+        <p className="text-[9px] font-bold text-slate-500 mb-6 text-center uppercase tracking-widest">Faculty: {faculty.name}</p>
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-2">
             {["Training", "Mentoring"].map(t => (
               <button key={t} onClick={() => setIntType(t)}
                 className={cn(
                   "py-2.5 rounded-lg font-black text-[10px] uppercase border transition-all",
-                  intType === t ? "bg-emerald-600 text-white border-emerald-600" : "bg-slate-950 border-white/5 text-slate-400"
+                  intType === t ? "bg-emerald-600 text-white border-emerald-600" : "bg-slate-50 border-slate-200 text-slate-500 hover:border-emerald-300"
                 )}>
                 {t}
               </button>
             ))}
           </div>
           <textarea
-            className="w-full bg-slate-950 border border-white/5 rounded-lg p-3 text-xs font-semibold min-h-[100px] outline-none focus:border-emerald-500 transition-all text-white"
+            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs font-semibold min-h-[100px] outline-none focus:border-emerald-500 transition-all text-slate-900 focus:bg-white"
             placeholder="Analytical description..."
             value={description} onChange={e => setDescription(e.target.value)}
           />
           <div className="flex gap-2">
-            <Button variant="ghost" size="sm" onClick={() => setShowModal(false)} className="flex-1 h-9 rounded-lg text-slate-400 text-[10px] font-black uppercase">Cancel</Button>
+            <Button variant="ghost" size="sm" onClick={() => setShowModal(false)} className="flex-1 h-9 rounded-lg text-slate-500 hover:text-slate-900 text-[10px] font-black uppercase">Cancel</Button>
             <Button size="sm" onClick={handleAssign} className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white h-9 rounded-lg text-[10px] font-black uppercase border-none">Execute</Button>
           </div>
         </div>

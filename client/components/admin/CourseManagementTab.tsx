@@ -81,8 +81,8 @@ export default function CourseManagementTab() {
                 key={v}
                 onClick={() => setActiveView(v)} 
                 className={cn(
-                  "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all",
-                  activeView === v ? "bg-slate-900 text-white shadow-sm" : "text-slate-500 hover:bg-white"
+                  "px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest transition-all",
+                  activeView === v ? "bg-indigo-600 text-white shadow-md" : "text-slate-500 hover:bg-slate-100"
                 )}
               >
                 {v === "board" ? "Live Board" : v === "analytics" ? "AI Analytics" : "Dependency"}
@@ -184,7 +184,7 @@ export default function CourseManagementTab() {
 
       {activeView === "analytics" && (
       <div className="space-y-6">
-        <Card className="p-6 bg-slate-900 text-white rounded-xl border border-slate-800 shadow-sm relative overflow-hidden">
+        <Card className="p-6 bg-indigo-600 text-white rounded-xl border border-indigo-500 shadow-md shadow-indigo-100 relative overflow-hidden">
           <div className="relative z-10 space-y-4 max-w-4xl">
              <h3 className="text-sm font-black text-amber-400 uppercase tracking-widest flex items-center gap-2">
                <Zap className="h-4 w-4" /> Curriculum Intelligence
@@ -248,11 +248,11 @@ export default function CourseManagementTab() {
             </h3>
             <div className="flex flex-col items-center gap-6">
                <div className="flex justify-center gap-6 w-full">
-                  <div className="p-4 bg-slate-900 text-white rounded-lg shadow-sm w-44 text-center border-b-2 border-emerald-500">
+                  <div className="p-4 bg-white text-slate-900 rounded-lg shadow-sm w-44 text-center border border-slate-200 border-b-4 border-emerald-500">
                      <p className="font-black text-xs uppercase">Math I</p>
                      <p className="text-[8px] uppercase mt-1 text-emerald-400 font-bold">100% Cleared</p>
                   </div>
-                  <div className="p-4 bg-slate-900 text-white rounded-lg shadow-sm w-44 text-center border-b-2 border-emerald-500">
+                  <div className="p-4 bg-white text-slate-900 rounded-lg shadow-sm w-44 text-center border border-slate-200 border-b-4 border-emerald-500">
                      <p className="font-black text-xs uppercase">Prog In C</p>
                      <p className="text-[8px] uppercase mt-1 text-emerald-400 font-bold">98% Cleared</p>
                   </div>

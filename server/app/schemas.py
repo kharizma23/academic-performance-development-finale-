@@ -9,7 +9,7 @@ class UserRole(str, Enum):
     ADMIN = "admin"
 
 class UserBase(BaseModel):
-    email: EmailStr
+    email: Optional[str] = None
     role: UserRole = UserRole.STUDENT
 
 class UserCreate(UserBase):
@@ -41,8 +41,8 @@ class StudentCreate(StudentBase):
     current_cgpa: Optional[float] = 0.0 # Added to support immediate AI generation
 
 class Student(StudentBase):
-    id: str
-    user_id: str
+    id: Optional[str] = None
+    user_id: Optional[str] = None
     name: Optional[str] = None
     roll_number: Optional[str] = None
     dob: Optional[str] = None
@@ -53,22 +53,28 @@ class Student(StudentBase):
     alternate_email: Optional[str] = None
     previous_school: Optional[str] = None
     gender: Optional[str] = None
-    current_cgpa: float
-    academic_dna_score: float
-    growth_index: float
-    risk_level: str
-    career_readiness_score: float
+    current_cgpa: float = 0.0
+    academic_dna_score: float = 0.0
+    growth_index: float = 0.0
+    risk_level: str = "Stable"
+    career_readiness_score: float = 0.0
     weakness: Optional[str] = None
-    admin_notes: Optional[str] = None # Tactical node for admin remarks
-    # --- Deep Profiling Fields (Intelligence Dashboard) ---
+    admin_notes: Optional[str] = None 
+    full_name: Optional[str] = None
+    ai_scores: Optional["AIScore"] = None
+    user: Optional[User] = None
+    
+    # --- Deep Profiling Fields ---
     school_11th: Optional[str] = None
     school_12th: Optional[str] = None
+    cutoff_12th: Optional[float] = None
     area_of_interest: Optional[str] = None
     cgpa_trend: Optional[List[float]] = None
     ai_suggestion: Optional[str] = None
     faculty_feedback: Optional[str] = None
     placement_analysis: Optional[str] = None
     weak_areas: Optional[str] = None
+    subject_performance: List[dict] = []
     
     # --- New Intelligence Fields ---
     father_name: Optional[str] = None
@@ -102,6 +108,12 @@ class Student(StudentBase):
 
     class Config:
         from_attributes = True
+
+class StudentSearchResponse(BaseModel):
+    total: int
+    students: List[Student]
+    page: int
+    pages: int
 
 class AcademicRecordBase(BaseModel):
     semester: int
@@ -290,11 +302,12 @@ class StaffCreate(StaffBase):
     staff_id: Optional[str] = None # Allow manual override
 
 class Staff(StaffBase):
-    id: str
-    user_id: str
+    id: Optional[str] = None
+    user_id: Optional[str] = None
     staff_id: Optional[str] = None
     name: Optional[str] = None
-    user: Optional['User'] = None  # Include for credentials in list view
+    full_name: Optional[str] = None
+    user: Optional[User] = None
 
     class Config:
         from_attributes = True
@@ -377,6 +390,11 @@ class DynamicActionPlan(BaseModel):
     roadmap: List[ActionPlanStep]
     insight_quote: str
 
+class AIAnomaly(BaseModel):
+    type: str
+    detail: str
+    priority: str # 'high' or 'medium'
+
 class DashboardOverview(BaseModel):
     institutional: InstitutionalStats
     early_warning: EarlyWarningStats
@@ -387,6 +405,7 @@ class DashboardOverview(BaseModel):
     resource_opt: ResourceOptimization
     weekly_insight: str
     action_plan: DynamicActionPlan
+    ai_anomalies: List[AIAnomaly] = []
 
 class RemedialAssessmentBase(BaseModel):
     subject: str
@@ -626,6 +645,12 @@ class WeeklyReportData(BaseModel):
     reports: List[WeeklyReportSummary]
     department_stats: List[dict] # Simplified for now
 
+class StaffSearchResponse(BaseModel):
+    total: int
+    staff: List[Staff]
+    page: int
+    pages: int
+
 # --- MODULE 3: ATTENDANCE INTELLIGENCE ---
 class StudentAttendance(BaseModel):
     id: str
@@ -690,3 +715,58 @@ class LearningPathNode(BaseModel):
     steps: List[str]
     progress: float
     certificates: List[str]
+class AIAssessmentCreate(BaseModel):
+    title: str
+    subject: str
+    year: int
+    difficulty: str = "Medium"
+    duration: str = "30m"
+
+class StaffStats(BaseModel):
+    total_students: int
+    avg_cgpa: float
+    high_risk_count: int
+    department: str
+
+class RankItem(BaseModel):
+    name: str
+    cgpa: float
+
+class ClassIntelligence(BaseModel):
+    top_performers: List[str]
+    risk_list: List[str]
+    rank_list: List[RankItem]
+
+class CareerRole(BaseModel):
+    title: str
+    match: float
+    readiness: str # "HIGH", "MEDIUM", "LOW"
+    missing_skills: List[str]
+    suggestions: List[str]
+    domain: str
+    lpa: Optional[str] = None
+    required_skills: List[str] = []
+    learning_path: List[str] = []
+
+class CareerRecommendations(BaseModel):
+    roles: List[CareerRole]
+    domain_scores: dict # e.g. {"software": 90, "data_science": 75, "devops": 80}
+    institutional_readiness: float
+    ai_recommendations: str
+
+class AIAdviceRequest(BaseModel):
+    student_profile: dict
+
+class CareerAdvice(BaseModel):
+    personalized_suggestion: str
+    improvement_tips: List[str]
+
+class CareerProgressTrend(BaseModel):
+    label: str # Week 1, Week 2, etc.
+    value: float
+
+class CareerProgress(BaseModel):
+    improvement_trend: List[CareerProgressTrend]
+    skill_growth: List[dict] # e.g. [{"skill": "Python", "growth": 20}]
+    readiness_change: float # e.g. 10.5
+

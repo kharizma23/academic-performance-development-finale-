@@ -17,7 +17,7 @@ export default function AcademicJourney() {
  const [loading, setLoading] = useState(true)
 
  const getApiUrl = (path: string) => {
- return `http://127.0.0.1:8000${path}`;
+ return `http://127.0.0.1:8001${path}`;
  };
 
  useEffect(() => {

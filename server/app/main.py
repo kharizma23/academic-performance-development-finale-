@@ -109,9 +109,28 @@ async def startup_event():
                         current_cgpa=cgpa, growth_index=round(random.uniform(1.1, 1.8), 2),
                         academic_dna_score=round(random.uniform(60, 95), 1),
                         career_readiness_score=round(random.uniform(40, 90), 1),
-                        risk_level=risk
+                        risk_level=risk,
+                        attendance_percentage=round(random.uniform(75, 98), 1)
                     )
                     db.add(s_profile); db.flush()
+                
+                # --- EXPLICIT LOGIN NODES FOR USER ---
+                # Staff Logins
+                for d in ["CSE", "ECE", "MECH", "IT", "AIML"]:
+                    u_email = f"faculty.{d.lower()}@gmail.com"
+                    if not db.query(models.User).filter(models.User.email == u_email).first():
+                        u = models.User(email=u_email, full_name=f"Dr. {d} Faculty", role=models.UserRole.FACULTY, hashed_password=auth_utils.get_password_hash(pwd))
+                        db.add(u); db.flush()
+                        db.add(models.Staff(user_id=u.id, staff_id=f"STF-{d}", department=d, designation="Senior Faculty"))
+                
+                # Student Logins
+                for i, d in enumerate(["CSE", "ECE", "MECH", "IT", "AIML"]):
+                    u_email = f"student{i*10}.{d.lower()}26@gmail.com"
+                    if not db.query(models.User).filter(models.User.email == u_email).first():
+                        u = models.User(email=u_email, full_name=f"Student {d} Test", role=models.UserRole.STUDENT, hashed_password=auth_utils.get_password_hash("Student@1234"))
+                        db.add(u); db.flush()
+                        s = models.Student(user_id=u.id, roll_number=f"737626{d}10{i}", department=d, year=1, current_cgpa=8.5, attendance_percentage=92.0)
+                        db.add(s)
                     
                     # 4. Academic Record Synthesis (Fueling Subject Intelligence)
                     db.add(models.AcademicRecord(student_id=s_profile.id, semester=3, subject="DSA", internal_marks=random.randint(15, 20), external_marks=random.randint(30, 80)))

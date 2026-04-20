@@ -47,7 +47,7 @@ export default function DepartmentIntelligence({ currentDept }: DeptProps) {
  const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
  const protocol = (typeof window !== 'undefined' ? window.location.protocol : 'http:') || 'http:';
  const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
- return `${protocol}//${apiHost}:8000${path}`;
+ return `${protocol}//${apiHost}:8001${path}`;
  };
 
  const fetchData = async () => {
@@ -134,7 +134,7 @@ export default function DepartmentIntelligence({ currentDept }: DeptProps) {
     ))}
   </div>
 
-  <Card className="bg-slate-900 p-4 rounded-xl text-white border-none shadow-md">
+  <Card className="bg-indigo-600 p-4 rounded-xl text-white border-none shadow-md">
     <div className="flex items-center gap-2.5 mb-2.5">
       <Zap className="h-4 w-4 text-emerald-500" />
       <h4 className="text-[9px] font-black uppercase tracking-widest leading-none">Autonomous Intelligence stream</h4>
@@ -153,7 +153,7 @@ export default function DepartmentIntelligence({ currentDept }: DeptProps) {
         onClick={() => router.push(`/admin/department/${dept.id}`)}
         className={cn("px-3 py-1 text-[8px] font-black uppercase tracking-widest transition-all border rounded flex-shrink-0", 
           currentDept.toUpperCase() === dept.id.toUpperCase() 
-          ? "bg-slate-900 border-slate-900 text-white shadow-sm" 
+          ? "bg-indigo-600 border-indigo-600 text-white shadow-sm"
           : "bg-white border-slate-200 text-slate-500 hover:border-slate-400")
         }
       >

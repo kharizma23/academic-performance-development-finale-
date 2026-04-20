@@ -16,7 +16,7 @@ export default function TestAssessmentTab() {
   const getApiUrl = (path: string) => {
     const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
     const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
-    return `http://${apiHost}:8000${path}`;
+    return `http://${apiHost}:8001${path}`;
   };
 
   const fetchTests = async () => {
@@ -56,7 +56,7 @@ export default function TestAssessmentTab() {
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-tight leading-snug">Autonomous test generation and automated evaluation vectors.</p>
         </div>
         <div className="flex gap-2">
-          <Button size="sm" className="bg-indigo-600 text-white rounded-lg h-9 font-bold uppercase text-[10px] tracking-widest hover:bg-slate-900 shadow-sm transition-all border-none">
+          <Button size="sm" className="bg-indigo-600 text-white rounded-lg h-9 font-bold uppercase text-[10px] tracking-widest hover:bg-indigo-700 shadow-sm transition-all border-none">
             <Zap className="h-3.5 w-3.5 mr-2" /> AI Generation
           </Button>
         </div>

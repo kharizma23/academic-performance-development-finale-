@@ -34,8 +34,8 @@ export default function CareerPredictionTab() {
  const [isRedirecting, setIsRedirecting] = useState(false);
 
  const getApiUrl = (path: string) => {
- const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
- return `http://${hostname}:8000${path}`;
+ const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8001';
+ return `${baseUrl}${path}`;
  };
 
  const fetchDetails = async (domain: string) => {
@@ -179,7 +179,7 @@ export default function CareerPredictionTab() {
         </div>
 
         {/* 2. AI Confidence Index */}
-        <Card className="col-span-12 lg:col-span-4 p-4 border border-slate-200 flex flex-col bg-slate-900 border-slate-800 text-white shadow-xl relative overflow-hidden">
+        <Card className="col-span-12 lg:col-span-4 p-4 border border-blue-600 flex flex-col bg-blue-600 text-white shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-3xl -mr-12 -mt-12" />
           <h2 className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 mb-4">
             <Activity className="h-3 w-3 text-blue-400" />
@@ -237,7 +237,7 @@ export default function CareerPredictionTab() {
         </Card>
 
         {/* 4. Career Path Visualizer */}
-        <Card className="col-span-12 lg:col-span-8 p-5 border border-slate-200 shadow-sm flex flex-col bg-slate-950 text-white relative overflow-hidden">
+        <Card className="col-span-12 lg:col-span-8 p-5 border border-indigo-600 shadow-sm flex flex-col bg-indigo-600 text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none" />
           <h2 className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 mb-8 relative z-10">
             <Globe className="h-3.5 w-3.5 text-blue-400" />
@@ -250,7 +250,7 @@ export default function CareerPredictionTab() {
                 <div className={`h-8 w-8 rounded-lg flex items-center justify-center transition-all duration-500 border ${
                   step.status === 'Completed' ? 'bg-blue-600 text-white border-blue-500 shadow-lg' : 
                   step.status === 'Active' ? 'bg-blue-400 text-white border-blue-300 animate-pulse' : 
-                  'bg-slate-900 text-slate-600 border-slate-800'
+                  'bg-indigo-300 text-indigo-700 border-indigo-400'
                 }`}>
                   <span className="text-[10px] font-bold">{step.id}</span>
                 </div>
@@ -261,8 +261,8 @@ export default function CareerPredictionTab() {
               </div>
             ))}
           </div>
-          <div className="mt-8 p-3 bg-slate-900/50 border border-slate-800 rounded-lg flex items-center gap-3 z-10">
-            <div className="text-[10px] font-bold text-blue-400 uppercase tracking-widest border-r border-slate-800 pr-3">Learning Path</div>
+          <div className="mt-8 p-3 bg-white/10 border border-white/20 rounded-lg flex items-center gap-3 z-10">
+            <div className="text-[10px] font-bold text-indigo-100 uppercase tracking-widest border-r border-white/20 pr-3">Learning Path</div>
             <div className="flex flex-wrap gap-2">
               {displayRoadmap.learning_path.map((p: string) => (
                 <span key={p} className="px-2 py-0.5 bg-slate-800 text-[9px] font-medium text-slate-300 rounded border border-slate-700">
@@ -388,7 +388,7 @@ export default function CareerPredictionTab() {
                 ))}
               </div>
               <div className="p-4 bg-blue-50/50 rounded-lg border border-dashed border-blue-100 mt-4 text-[10px] font-bold text-blue-900 leading-relaxed uppercase">
-                Institutional Recommendation: Focus on certifications related to {domainDetails?.skills_focus[0]} to bridge current DNA gaps by Q4 2026.
+                Institutional Recommendation: Focus on certifications related to {domainDetails?.skills_focus?.[0] || 'Core Skills'} to bridge current DNA gaps by Q4 2026.
               </div>
             </div>
             <div className="bg-slate-50/50 rounded-xl p-5 border border-slate-100 relative overflow-hidden">
@@ -427,7 +427,7 @@ export default function CareerPredictionTab() {
                     setIsRedirecting(false);
                   }
                 }}
-                className="w-full mt-6 bg-slate-900 text-white hover:bg-black border-none rounded-lg h-10 uppercase tracking-widest text-[10px] font-black transition-all"
+                className="w-full mt-6 bg-blue-600 text-white hover:bg-blue-700 border-none rounded-lg h-10 uppercase tracking-widest text-[10px] font-black transition-all shadow-md shadow-blue-200"
               >
                 {isRedirecting ? (
                   <div className="flex items-center justify-center gap-2">

@@ -34,7 +34,7 @@ export default function AddStaffPage() {
 
  const getApiUrl = (path: string) => {
  const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
- return `http://${hostname}:8000${path}`;
+ return `http://${hostname}:8001${path}`;
  };
 
  const [success, setSuccess] = useState(false)

@@ -18,7 +18,7 @@ export default function BridgeProgramPage() {
 
     const fetchProgram = async () => {
         try {
-            const res = await fetch(`http://127.0.0.1:8000/api/bridge/${params.id}`);
+            const res = await fetch(`http://127.0.0.1:8001/api/bridge/${params.id}`);
             setProgram(await res.json());
         } catch (err) {
             console.error("Neural Bridge Offline.", err);
@@ -31,7 +31,7 @@ export default function BridgeProgramPage() {
 
     const handleTaskUpdate = async (taskId: string, currentStatus: string) => {
         try {
-            const res = await fetch(`http://127.0.0.1:8000/api/bridge/update-task`, {
+            const res = await fetch(`http://127.0.0.1:8001/api/bridge/update-task`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

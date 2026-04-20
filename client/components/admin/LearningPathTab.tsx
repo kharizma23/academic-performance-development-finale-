@@ -18,7 +18,7 @@ export default function LearningPathTab() {
   const getApiUrl = (path: string) => {
     const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
     const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
-    return `http://${apiHost}:8000${path}`;
+    return `http://${apiHost}:8001${path}`;
   };
 
   const fetchPath = async () => {
@@ -116,7 +116,7 @@ export default function LearningPathTab() {
 
         {/* Side Metrics */}
         <div className="lg:col-span-4 space-y-6">
-          <Card className="p-6 rounded-xl bg-slate-900 border border-slate-800 text-white shadow-sm flex flex-col justify-between h-full">
+          <Card className="p-6 rounded-xl bg-purple-600 border border-purple-500 text-white shadow-lg shadow-purple-100 flex flex-col justify-between h-full">
             <div className="space-y-6">
               <h3 className="text-[10px] font-black text-purple-400 uppercase tracking-widest flex items-center gap-2">
                 <Activity className="h-3.5 w-3.5" /> Growth Metrics
@@ -128,16 +128,16 @@ export default function LearningPathTab() {
                   <p className="text-xl font-black text-white leading-none">{displayData.progress}%</p>
                 </div>
                 <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
-                  <div className="h-full bg-purple-500 rounded-full" style={{ width: `${displayData.progress}%` }} />
+                  <div className="h-full bg-white rounded-full" style={{ width: `${displayData.progress}%` }} />
                 </div>
               </div>
               
               <div className="pt-4 border-t border-white/5">
                 <h4 className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-4">Earned Credentials</h4>
-                <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                   {displayData.certificates?.map((cert: string, i: number) => (
-                    <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/5 flex items-center gap-2">
-                      <Award className="h-3 w-3 text-purple-400 shrink-0" />
+                    <div key={i} className="p-3 rounded-lg bg-white/10 border border-white/20 flex items-center gap-2">
+                      <Award className="h-3 w-3 text-purple-200 shrink-0" />
                       <p className="text-[9px] font-bold text-white uppercase truncate">{cert}</p>
                     </div>
                   ))}
@@ -145,7 +145,7 @@ export default function LearningPathTab() {
               </div>
             </div>
 
-            <Button className="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white font-black uppercase text-[10px] h-10 rounded-lg shadow-md border-none transition-all active:scale-95">
+            <Button className="w-full mt-6 bg-white hover:bg-slate-50 text-purple-700 font-black uppercase text-[10px] h-10 rounded-lg shadow-md border-none transition-all active:scale-95">
               <Share2 className="h-3.5 w-3.5 mr-2" /> Export Dossier
             </Button>
           </Card>

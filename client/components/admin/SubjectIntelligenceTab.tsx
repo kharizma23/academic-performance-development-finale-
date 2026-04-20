@@ -74,7 +74,7 @@ export default function SubjectIntelligenceTab() {
       <div className="space-y-6 animate-in fade-in duration-700 pb-10">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 bg-white p-6 rounded-xl border border-slate-100 shadow-sm relative overflow-hidden">
           <div className="flex items-center gap-6 relative z-10">
-            <Button variant="outline" size="sm" onClick={() => setSelectedSubject(null)} className="h-8 w-8 p-0 rounded-lg">
+            <Button variant="outline" size="sm" onClick={() => setSelectedSubject(null)} className="h-8 w-8 p-0 rounded-full bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:text-blue-600 shadow-sm relative z-10 transition-all">
               <ArrowLeft className="h-4 w-4" />
             </Button>
             <div>
@@ -125,7 +125,7 @@ export default function SubjectIntelligenceTab() {
             </div>
           </Card>
 
-          <Card className="lg:col-span-4 bg-slate-900 text-white rounded-xl p-6 shadow-md relative overflow-hidden">
+          <Card className="lg:col-span-4 bg-blue-600 text-white rounded-xl p-6 shadow-md shadow-blue-200 relative overflow-hidden border-none">
             <div className="relative z-10 space-y-6">
               <div className="h-10 w-10 rounded-lg bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center">
                 <Target className="h-5 w-5 text-blue-200" />
@@ -203,7 +203,7 @@ export default function SubjectIntelligenceTab() {
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="h-9 w-9 rounded-lg bg-slate-900 text-white flex items-center justify-center font-black text-xs">
+                <div className="h-9 w-9 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-sm shadow-indigo-100">
                   {s.code.substring(0, 2)}
                 </div>
                 <div className="text-right">
@@ -225,7 +225,7 @@ export default function SubjectIntelligenceTab() {
                 </div>
               </div>
             </div>
-            <Button size="sm" variant="ghost" className="w-full mt-4 h-8 text-[10px] font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all">
+            <Button size="sm" variant="ghost" className="w-full mt-4 h-8 text-[10px] font-bold uppercase tracking-widest bg-slate-50 text-slate-600 hover:bg-blue-600 hover:text-white transition-all rounded-lg border border-slate-100">
               Hub <ChevronRight className="h-3 w-3 ml-2" />
             </Button>
           </Card>

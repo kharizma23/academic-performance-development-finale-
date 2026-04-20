@@ -11,7 +11,7 @@ echo [NETWORK]: Clearing high-latency network bridges...
 echo [PERSISTENCE]: Initializing fresh WAL Persistence Mode...
 
 :: Task 2: Launch Backend in a New Window
-start "INSTITUTIONAL BACKEND (Fixed)" cmd /k "cd server && .\venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8000"
+start "INSTITUTIONAL BACKEND (Fixed)" cmd /k "cd server && .\venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8001"
 
 :: Task 3: Launch Frontend in a New Window
 start "INSTITUTIONAL FRONTEND" cmd /k "cd client && npm run dev"

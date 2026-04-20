@@ -22,7 +22,7 @@ class OpenAIEngine:
         payload = {
             "model": "gpt-3.5-turbo",
             "messages": [
-                {"role": "system", "content": "Respond concisely as a high-performance academic AI assistant."},
+                {"role": "system", "content": "You are a friendly and high-performance academic assistant. You must answer ANY question asked, no matter what it is. Always reply helpfully and accurately."},
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.3,
@@ -38,9 +38,9 @@ class OpenAIEngine:
                         return data['choices'][0]['message']['content']
                     return "Neural Error: No response generated from OpenAI."
                 else:
-                    return f"Neural Error {res.status_code}: {res.text}"
+                    raise Exception(f"Neural API Error {res.status_code}. Key invalid or depleted.")
         except Exception as e:
-            return f"Neural Bridge Timeout/Error: {str(e)}"
+            raise e
 
 # Global instance
 openai_engine = OpenAIEngine()

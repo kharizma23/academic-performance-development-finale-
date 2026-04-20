@@ -18,7 +18,7 @@ export default function RegisterPage() {
  const [success, setSuccess] = useState(false)
 
  const getApiUrl = (path: string) => {
- return `http://127.0.0.1:8000${path}`;
+ return `http://127.0.0.1:8001${path}`;
  };
 
  const handleRegister = async (e: React.FormEvent) => {
@@ -112,9 +112,11 @@ export default function RegisterPage() {
  <input
  type="email"
  value={email}
- onChange={(e) => setEmail(e.target.value)}
+ onChange={(e) => setEmail(e.target.value.toLowerCase())}
  placeholder="yourid@university.edu"
- className="flex h-24 w-full border-[3px] border-black bg-white pl-20 pr-6 text-3xl font-black uppercase focus:outline-none focus:bg-zinc-50 transition-all placeholder:text-slate-200"
+ autoCapitalize="none"
+ autoCorrect="off"
+ className="flex h-24 w-full border-[3px] border-black bg-white pl-20 pr-6 text-3xl font-black focus:outline-none focus:bg-zinc-50 transition-all placeholder:text-slate-200"
  required
  />
  </div>

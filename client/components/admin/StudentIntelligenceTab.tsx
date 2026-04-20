@@ -129,7 +129,7 @@ export default function StudentIntelligenceTab() {
       <div className="space-y-6">
         <div className="flex items-center justify-between border-b border-slate-100 pb-4">
           <div className="flex items-center gap-4">
-            <div className="h-8 w-8 rounded-lg bg-slate-900 text-white flex items-center justify-center">
+            <div className="h-8 w-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-md">
               <GraduationCap size={16} />
             </div>
             <div>
@@ -158,7 +158,7 @@ export default function StudentIntelligenceTab() {
               <Card key={`${s.id}-${s.roll_number}-${i}`} className="group p-5 rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between mb-2">
-                    <div className="h-10 w-10 bg-slate-900 text-white rounded-lg flex items-center justify-center text-xs font-bold group-hover:bg-blue-600 transition-all">
+                    <div className="h-10 w-10 bg-slate-100 text-blue-600 rounded-lg flex items-center justify-center text-xs font-black group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm border border-blue-50">
                       {(s.user?.full_name || s.name || "S").split(' ').map((n: any) => n[0]).join('').substring(0,2).toUpperCase()}
                     </div>
                     <div className="text-right">
@@ -195,7 +195,7 @@ export default function StudentIntelligenceTab() {
                 </div>
 
                 <Link href={`/admin/students/${s.id}`} className="block w-full mt-4">
-                  <Button size="sm" className="w-full h-8 bg-slate-900 text-white rounded-lg font-bold uppercase text-[10px] tracking-wider hover:bg-blue-600 transition-all border-none">
+                  <Button size="sm" className="w-full h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold uppercase text-[10px] tracking-wider transition-all border-none shadow-sm shadow-blue-100">
                     Open Intelligence
                   </Button>
                 </Link>

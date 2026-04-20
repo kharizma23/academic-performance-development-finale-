@@ -29,7 +29,7 @@ export default function SkillIntelligenceTab() {
  const getApiUrl = (path: string) => {
  const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
  const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
- return `http://${apiHost}:8000${path}`;
+ return `http://${apiHost}:8001${path}`;
  };
 
  const fetchData = async () => {
@@ -107,7 +107,7 @@ export default function SkillIntelligenceTab() {
   <Button size="sm" onClick={fetchData} variant="outline" className="h-9 px-4 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
   <RefreshCw className="h-3.5 w-3.5" /> Re-Scan
   </Button>
-  <Button size="sm" className="bg-slate-900 text-white hover:bg-slate-800 h-9 px-6 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 border-none">
+  <Button size="sm" className="bg-indigo-600 text-white hover:bg-indigo-700 h-9 px-6 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 border-none shadow-sm shadow-indigo-100">
   <Download className="h-3.5 w-3.5" /> Export
   </Button>
   </div>
@@ -220,7 +220,7 @@ export default function SkillIntelligenceTab() {
   </Card>
 
   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-  <Card className="p-5 border border-slate-200 bg-slate-900 text-white relative overflow-hidden">
+  <Card className="p-5 border border-rose-200 bg-rose-50 text-rose-900 relative overflow-hidden">
     <h3 className="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-3 flex items-center gap-2">
     <AlertTriangle className="h-3.5 w-3.5" /> Matrix Gap
     </h3>

@@ -7,6 +7,28 @@ from app import models, database, auth
 from app.database import SessionLocal
 from app.ai.gemini_engine import gemini_engine as gemini
 from app.ai.openai_engine import openai_engine as openai
+from openai import AsyncOpenAI
+import os
+from app.config import settings
+
+# New Fallback AI implementation using user's explicit env signature
+openai_client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY") or settings.openai_api_key)
+
+async def fallback_ai(prompt: str) -> str:
+    try:
+        response = await openai_client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an intelligent academic assistant. Always give clear, helpful, structured answers."
+                },
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"Neural API Error: Both Gemini and OpenAI Nodes are Offline. Reason: {str(e)}"
 
 router = APIRouter(
     prefix="/api/ai",
@@ -23,7 +45,10 @@ class GenerateRequest(BaseModel):
     type: Optional[str] = "MCQ"
 
 @router.post("/chat")
-async def ai_chat(request: ChatRequest):
+async def ai_chat(
+    request: ChatRequest,
+    current_user: models.User = Depends(auth.get_current_active_user)
+):
     msg = request.message.lower()
     db = SessionLocal()
     try:
@@ -43,6 +68,8 @@ async def ai_chat(request: ChatRequest):
             intent = "data_retrieval"
         elif any(w in msg for w in ["evaluate", "check", "submission", "score"]):
             intent = "evaluation"
+        elif any(w in msg for w in ["weak", "struggling", "low attendance", "attendance risk", "at risk"]):
+            intent = "faculty_diagnostic"
 
         resp = {"intent": intent, "message": "", "data": None, "suggestions": []}
 
@@ -83,48 +110,94 @@ async def ai_chat(request: ChatRequest):
                     best = db.query(models.AcademicRecord).order_by(models.AcademicRecord.internal_marks.desc()).first()
                     if best: resp["message"] += f"{best.student.user.full_name} ({best.internal_marks} marks)"
 
+        elif intent == "faculty_diagnostic":
+            if current_user.role != models.UserRole.FACULTY:
+                resp["message"] = "This diagnostic capability is reserved for Faculty and Administrative nodes only."
+            else:
+                staff = db.query(models.Staff).filter(models.Staff.user_id == current_user.id).first()
+                query = db.query(models.Student).filter(models.Student.department == staff.department)
+                
+                if "attendance" in msg:
+                    risks = query.filter(models.Student.attendance_percentage < 75).all()
+                    if risks:
+                        names = [f"• {s.name} (Roll: {s.roll_number}) - Attendance: {s.attendance_percentage}%" for s in risks]
+                        resp["message"] = f"I've identified {len(risks)} students in the {staff.department} sector with critical attendance risk (<75%):\n\n" + "\n".join(names)
+                        resp["suggestions"] = ["Notify Parents", "Log Counseling Session"]
+                    else:
+                        resp["message"] = f"Neural verification complete. No students in the {staff.department} sector are currently below the 75% attendance threshold."
+                else:
+                    # Default: Weak/Risk students by CGPA or Risk Level
+                    risks = query.filter(models.Student.risk_level == "High").all()
+                    if not risks:
+                        risks = query.filter(models.Student.current_cgpa < 6.0).all()
+                    
+                    if risks:
+                        names = [f"• {s.name} (GPA: {s.current_cgpa}) - {s.risk_level} Risk" for s in risks]
+                        resp["message"] = f"Identified {len(risks)} students in {staff.department} requiring immediate academic intervention:\n\n" + "\n".join(names)
+                        resp["suggestions"] = ["View Class Rankings", "Assign Remedial Test"]
+                    else:
+                        resp["message"] = f"All active nodes in the {staff.department} registry are performing within stable parameters."
+
         elif intent == "evaluation":
              resp["message"] = "Initiating AI Neural Evaluation for all pending submissions... Done. Scores have been updated in the institutional monitor."
              resp["suggestions"] = ["View Updated Results", "Export PDF Report"]
 
         elif intent == "question_generation":
-             # Use OpenAI for specialized MCQ generation
+             # Use Gemini as PRIMARY for specialized MCQ generation
              subj = target_subject or "General Intelligence"
              prompt = f"Generate 5 high-quality {subj.upper()} MCQs. Return ONLY a JSON object with 'title', 'subject', 'topic' (use 'Neural Logic'), and 'questions' array. Each question must have 'question', 'options' (list of 4), and 'answer' (exact text from options)."
              
              try:
-                 ai_json_str = await openai.generate_response(prompt)
-                 # Expecting JSON back. If it's wrapped in ```json ... ```, strip it.
+                 ai_json_str = await gemini.generate_response(prompt)
+                 if "Neural Error" in ai_json_str or "Offline" in ai_json_str:
+                     raise Exception("Gemini error")
+                 
                  clean_json = ai_json_str.strip()
                  if clean_json.startswith("```json"):
                      clean_json = clean_json[7:-3].strip()
+                 elif clean_json.startswith("```"):
+                     clean_json = clean_json[3:-3].strip()
                  
                  import json
                  resp_data = json.loads(clean_json)
                  resp["message"] = f"Neural synthesis complete. I've generated a specialized {subj.upper()} assessment module."
                  resp["data"] = resp_data
              except Exception as e:
-                 resp["message"] = f"Neural synthesis error: {str(e)}. Falling back to baseline mode."
-                 resp["data"] = {
-                     "title": f"AI Assessment: {subj.upper()}",
-                     "subject": subj.upper(),
-                     "topic": "Neural Logic",
-                     "questions": [{"question": f"What is the core logic of {subj.upper()}?", "options": ["Option A", "Option B", "Option C", "Option D"], "answer": "Option A"}]
-                 }
+                 print(f"Gemini failed ({str(e)}), switching to OpenAI for MCQs...")
+                 try:
+                     ai_json_str = await fallback_ai(prompt)
+                     clean_json = ai_json_str.strip()
+                     if clean_json.startswith("```json"):
+                         clean_json = clean_json[7:-3].strip()
+                     elif clean_json.startswith("```"):
+                         clean_json = clean_json[3:-3].strip()
+                     import json
+                     resp_data = json.loads(clean_json)
+                     resp["message"] = f"Neural synthesis complete (Fallback AI). I've generated a specialized {subj.upper()} assessment module."
+                     resp["data"] = resp_data
+                 except Exception as e2:
+                     resp["message"] = f"Total neural synthesis error. Falling back to baseline mode."
+                     resp["data"] = {
+                         "title": f"AI Assessment: {subj.upper()}",
+                         "subject": subj.upper(),
+                         "topic": "Neural Logic",
+                         "questions": [{"question": f"What is the core logic of {subj.upper()}?", "options": ["Option A", "Option B", "Option C", "Option D"], "answer": "Option A"}]
+                     }
         
         else:
-            # Universal Assistant Call - Powered by OpenAI
+            # Universal Assistant Call - Powered by Gemini
             try:
-                ai_reply = await openai.generate_response(msg)
-                resp["message"] = ai_reply
-                
-                # Optional: Use Gemini for parallel suggestions if needed
-                # suggestions_prompt = f"Based on this message: '{msg}', suggest 3 follow-up actions for a student."
-                # resp["suggestions"] = await gemini.generate_response(suggestions_prompt)
-            except Exception as e:
-                # Fallback to Gemini for suggestions if OpenAI is offline
                 ai_reply = await gemini.generate_response(msg)
-                resp["message"] = ai_reply + "\n(Note: Neural Bridge Fallback Active)"
+                
+                if "Neural Error" in ai_reply or "Offline" in ai_reply:
+                    raise Exception("Gemini returned failure string.")
+                    
+                resp["message"] = ai_reply
+            except Exception as e:
+                print("Gemini failed, switching to OpenAI...")
+                # Fallback to OpenAI GPT-4o-mini
+                ai_reply = await fallback_ai(msg)
+                resp["message"] = ai_reply + "\n(Note: OpenAI Fallback Active)"
 
         return resp
     finally:

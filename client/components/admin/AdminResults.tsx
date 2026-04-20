@@ -31,7 +31,7 @@ export default function AdminResults() {
 
  const getApiUrl = (path: string) => {
  const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
- return `http://${hostname}:8000/api${path}`;
+ return `http://${hostname}:8001/api${path}`;
  };
 
  const fetchTests = async () => {
@@ -90,23 +90,23 @@ export default function AdminResults() {
  return (
  <div className="space-y-6 animate-in fade-in duration-700 pb-10">
   {/* Header Section */}
-  <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-slate-900 border border-slate-800 p-6 rounded-xl shadow-lg">
+  <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
     <div className="flex items-center gap-4">
-      <div className="p-2.5 bg-emerald-600 rounded-lg shadow-emerald-900/40">
-        <BarChart3 className="w-5 h-5 text-white" />
+      <div className="p-2.5 bg-emerald-50 rounded-lg shadow-sm border border-emerald-100">
+        <BarChart3 className="w-5 h-5 text-emerald-600" />
       </div>
       <div>
-        <h2 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+        <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
           Monitoring Node
-          <span className="px-1.5 py-0.5 bg-emerald-500/20 rounded text-[9px] font-black text-emerald-400 uppercase tracking-widest">Live</span>
+          <span className="px-1.5 py-0.5 bg-emerald-50 rounded text-[9px] font-black text-emerald-600 uppercase tracking-widest border border-emerald-100">Live</span>
         </h2>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Tracking AI assessments and student data.</p>
+        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Tracking AI assessments and student data.</p>
       </div>
     </div>
     <div className="flex gap-4">
-      <div className="px-4 py-2 bg-slate-950 rounded-lg border border-white/5 text-right w-32">
+      <div className="px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 text-right w-32 shadow-sm">
         <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Global Index</p>
-        <p className="text-xl font-black text-white leading-none">{displayTests.length}</p>
+        <p className="text-xl font-black text-slate-900 leading-none">{displayTests.length}</p>
       </div>
     </div>
   </div>
@@ -123,17 +123,17 @@ export default function AdminResults() {
             className={cn(
               "w-full p-4 text-left rounded-xl transition-all border group relative",
               selectedTest === test.id 
-                ? "bg-emerald-600 border-emerald-500 shadow-md translate-x-1" 
-                : "bg-slate-900 border-white/5 hover:bg-slate-800"
+                ? "bg-indigo-600 border-indigo-500 shadow-md translate-x-1" 
+                : "bg-white border-slate-200 hover:bg-slate-50"
             )}
           >
             <div className="flex items-start justify-between mb-2">
-              <p className="font-black text-xs text-white uppercase truncate w-40">{test.title}</p>
+              <p className={cn("font-black text-xs uppercase truncate w-40", selectedTest === test.id ? "text-white" : "text-slate-900")}>{test.title}</p>
               {selectedTest === test.id && <Sparkles size={12} className="text-white animate-pulse" />}
             </div>
             <div className="flex items-center justify-between">
-              <p className={cn("text-[8px] font-bold uppercase tracking-widest", selectedTest === test.id ? "text-white/60" : "text-slate-500")}>{test.subject}</p>
-              <span className={cn("text-[9px] font-bold", selectedTest === test.id ? "text-white/60" : "text-slate-500")}>{test.year}yr • {test.department}</span>
+              <p className={cn("text-[8px] font-bold uppercase tracking-widest", selectedTest === test.id ? "text-indigo-200" : "text-slate-500")}>{test.subject}</p>
+              <span className={cn("text-[9px] font-bold", selectedTest === test.id ? "text-indigo-200" : "text-slate-500")}>{test.year}yr • {test.department}</span>
             </div>
           </button>
         ))}
@@ -143,9 +143,9 @@ export default function AdminResults() {
     {/* Main Content */}
     <div className="lg:col-span-8">
       {!selectedTest ? (
-        <Card className="h-64 flex flex-col items-center justify-center bg-slate-900/50 border-dashed border-slate-800 rounded-xl">
-          <PieChart size={32} className="text-slate-800 mb-4" />
-          <p className="text-slate-600 font-bold uppercase tracking-widest text-[10px]">Select a protocol for visualization</p>
+        <Card className="h-64 flex flex-col items-center justify-center bg-slate-50 border-dashed border-slate-200 rounded-xl shadow-none">
+          <PieChart size={32} className="text-slate-300 mb-4" />
+          <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Select a protocol for visualization</p>
         </Card>
       ) : (
         <div className="space-y-6 animate-in fade-in duration-500">
@@ -158,33 +158,33 @@ export default function AdminResults() {
             ].map((s, i) => (
               <Card key={i} className={cn(
                 "p-4 rounded-xl border shadow-sm",
-                s.highlight ? "bg-emerald-600/10 border-emerald-500/20" : "bg-slate-950 border-white/5"
+                s.highlight ? "bg-emerald-50 border-emerald-100" : "bg-white border-slate-200"
               )}>
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">{s.label}</p>
-                  <s.icon className="h-3 w-3 text-emerald-500" />
+                  <s.icon className="h-3 w-3 text-emerald-600" />
                 </div>
-                <p className={cn("text-xl font-black", s.highlight ? "text-emerald-400" : "text-white")}>{s.value}</p>
+                <p className={cn("text-xl font-black", s.highlight ? "text-emerald-700" : "text-slate-900")}>{s.value}</p>
               </Card>
             ))}
           </div>
 
           {/* Table Container */}
-          <Card className="bg-slate-950 border-white/5 rounded-xl overflow-hidden overflow-x-auto shadow-sm">
-            <div className="p-4 border-b border-white/5 flex items-center justify-between bg-slate-900/50">
+          <Card className="bg-white border-slate-200 rounded-xl overflow-hidden overflow-x-auto shadow-sm">
+            <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div>
-                <h4 className="text-xs font-black text-white uppercase tracking-tight">Submission Matrix</h4>
+                <h4 className="text-xs font-black text-slate-900 uppercase tracking-tight">Submission Matrix</h4>
                 <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Neural Consensus Nodes</p>
               </div>
               <div className="flex gap-2">
-                <Button size="sm" onClick={evaluateAll} className="h-8 bg-white hover:bg-slate-100 text-slate-900 rounded-lg text-[9px] font-black uppercase tracking-widest px-4 border-none transition-all active:scale-95">
+                <Button size="sm" onClick={evaluateAll} className="h-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[9px] font-black uppercase tracking-widest px-4 border-none transition-all active:scale-95 shadow-sm">
                   Evaluate
                 </Button>
               </div>
             </div>
 
             <table className="w-full text-left">
-              <thead className="bg-white/5 border-b border-white/5">
+              <thead className="bg-slate-50/50 border-b border-slate-100">
                 <tr className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
                   <th className="p-4">Candidate</th>
                   <th className="p-4">Status</th>
@@ -192,31 +192,31 @@ export default function AdminResults() {
                   <th className="p-4">Rank</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-slate-100">
                 {displayResults.map((r, i) => (
-                  <tr key={i} className="hover:bg-white/[0.02] transition-colors group">
+                  <tr key={i} className="hover:bg-slate-50/50 transition-colors group">
                     <td className="p-4">
-                      <p className="text-xs font-black text-white uppercase truncate w-32">{r.student_name}</p>
-                      <p className="text-[8px] font-bold text-slate-600 uppercase tracking-widest mt-0.5">{r.department}</p>
+                      <p className="text-xs font-black text-slate-900 uppercase truncate w-32">{r.student_name}</p>
+                      <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">{r.department}</p>
                     </td>
                     <td className="p-4">
                       <div className="flex items-center gap-1.5">
                         <div className={cn("w-1 h-1 rounded-full", r.status === "Evaluated" ? "bg-emerald-500" : "bg-amber-500")} />
-                        <span className={cn("text-[9px] font-black uppercase tracking-widest", r.status === "Evaluated" ? "text-emerald-400" : "text-amber-400")}>{r.status}</span>
+                        <span className={cn("text-[9px] font-black uppercase tracking-widest", r.status === "Evaluated" ? "text-emerald-600" : "text-amber-500")}>{r.status}</span>
                       </div>
                     </td>
                     <td className="p-4">
                       <div className="flex items-center gap-2">
-                        <div className="w-16 bg-slate-900 h-1 rounded-full overflow-hidden shrink-0">
+                        <div className="w-16 bg-slate-100 h-1 rounded-full overflow-hidden shrink-0">
                           <div className="bg-emerald-500 h-full rounded-full" style={{width: `${r.accuracy}%`}}></div>
                         </div>
-                        <span className="text-[10px] font-black text-white">{r.score}</span>
+                        <span className="text-[10px] font-black text-slate-900">{r.score}</span>
                       </div>
                     </td>
                     <td className="p-4">
                       <span className={cn(
                         "px-1.5 py-0.5 rounded text-[8px] font-black uppercase",
-                        r.rank === 1 ? "bg-yellow-500/10 text-yellow-400" : "bg-slate-800 text-slate-400"
+                        r.rank === 1 ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-500"
                       )}>
                         #{r.rank}
                       </span>

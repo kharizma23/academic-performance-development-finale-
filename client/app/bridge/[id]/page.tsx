@@ -25,7 +25,8 @@ export default function BridgeProgramPage() {
         setSelectedTopic(topic);
         try {
             const safeTopic = encodeURIComponent(topic.toLowerCase().replace(/ /g, '-').replace(/\//g, '-'));
-            const res = await fetch(`http://localhost:8000/api/bridge/resources/${safeTopic}`);
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8001';
+            const res = await fetch(`${baseUrl}/api/bridge/resources/${safeTopic}`);
             if (!res.ok) throw new Error("Resource node offline");
             setResources(await res.json());
         } catch (err) {
@@ -38,7 +39,8 @@ export default function BridgeProgramPage() {
     const fetchProgram = async () => {
         try {
             console.log("Fetching Bridge Program State:", params.id);
-            const res = await fetch(`http://localhost:8000/api/bridge/${params.id}`);
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8001';
+            const res = await fetch(`${baseUrl}/api/bridge/${params.id}`);
             if (!res.ok) throw new Error("Bridge Node Offline");
             const data = await res.json();
             console.log("Roadmap Loaded Successfully:", data.roadmap);
@@ -56,7 +58,8 @@ export default function BridgeProgramPage() {
 
     const handleTaskUpdate = async (taskId: string, currentStatus: string) => {
         try {
-            const res = await fetch(`http://localhost:8000/api/bridge/update-task`, {
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8001';
+            const res = await fetch(`${baseUrl}/api/bridge/update-task`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

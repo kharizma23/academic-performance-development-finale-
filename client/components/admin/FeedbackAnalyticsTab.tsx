@@ -23,7 +23,7 @@ export default function FeedbackAnalyticsTab() {
   const getApiUrl = (path: string) => {
     const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
     const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
-    return `http://${apiHost}:8000${path}`;
+    return `http://${apiHost}:8001${path}`;
   };
 
   const fetchFeedback = async () => {
@@ -110,7 +110,7 @@ export default function FeedbackAnalyticsTab() {
             <p className="text-[8px] font-black text-emerald-500 uppercase tracking-widest">Positive Signal</p>
           </div>
         </Card>
-        <Card className="p-5 rounded-xl border border-slate-100 bg-slate-900 shadow-sm text-white flex flex-col justify-between">
+        <Card className="p-5 rounded-xl border border-indigo-200 bg-indigo-600 shadow-lg text-white flex flex-col justify-between shadow-indigo-100">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Action Nodes</p>
           <div className="flex items-end justify-between">
             <p className="text-2xl font-black text-white leading-none">08</p>
@@ -184,7 +184,7 @@ export default function FeedbackAnalyticsTab() {
             {displayData.faculty_ratings?.map((f: any, i: number) => (
               <div key={i} className="p-4 bg-slate-50 rounded-lg border border-slate-100 flex items-center justify-between group cursor-pointer hover:border-indigo-600 transition-all">
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-lg bg-indigo-600/10 text-indigo-600 flex items-center justify-center font-black text-sm uppercase">{f.name[0]}</div>
+                  <div className="h-10 w-10 rounded-lg bg-indigo-600/10 text-indigo-600 flex items-center justify-center font-black text-sm uppercase">{(f.name || "F")[0]}</div>
                   <div>
                     <p className="font-black text-slate-900 text-xs uppercase leading-none truncate w-32">{f.name}</p>
                     <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-1 ">{f.feedback_count} Consensus Nodes</p>
@@ -228,7 +228,7 @@ export default function FeedbackAnalyticsTab() {
             <Button 
               onClick={handleDeployDirective}
               disabled={isSubmitting}
-              className="bg-slate-900 hover:bg-slate-800 text-white font-black uppercase text-xs h-10 px-6 rounded-lg shadow-md shrink-0 flex items-center gap-3 transition-all active:scale-95"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase text-xs h-10 px-6 rounded-lg shadow-md shrink-0 flex items-center gap-3 transition-all active:scale-95 border-none"
             >
               {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />} DEPLOY VECTOR
             </Button>

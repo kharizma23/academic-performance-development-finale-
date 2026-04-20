@@ -113,7 +113,7 @@ const GlobalDashboard: React.FC<GlobalDashboardProps> = ({
             <span className="text-emerald-600">{data.early_warning?.low_risk_percent || 0}% SECURE</span>
           </div>
           <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
-            <div className="h-full bg-slate-900" style={{ width: `${data.early_warning?.low_risk_percent || 0}%` }}></div>
+            <div className="h-full bg-indigo-600" style={{ width: `${data.early_warning?.low_risk_percent || 0}%` }}></div>
           </div>
         </div>
       </Card>

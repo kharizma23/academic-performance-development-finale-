@@ -63,7 +63,7 @@ export default function FacultyAlerts({ alerts, onSelectFaculty }: Props) {
  return (
  <div className="space-y-4 animate-in fade-in duration-700">
   {/* Summary Bar */}
-  <Card className="bg-slate-900 border-none p-5 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 text-white shadow-md">
+  <Card className="bg-indigo-600 border-none p-5 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 text-white shadow-lg shadow-indigo-100">
     <div className="flex items-center gap-3">
       <Bell className="h-5 w-5 text-emerald-500" />
       <div>
@@ -150,7 +150,7 @@ export default function FacultyAlerts({ alerts, onSelectFaculty }: Props) {
                 />
                 <div className="flex gap-2">
                   <Button variant="ghost" size="sm" onClick={() => setIntervening(null)} className="flex-1 h-8 text-[9px] font-black uppercase text-slate-400">Cancel</Button>
-                  <Button size="sm" onClick={() => handleIntervene(alert)} className="flex-1 h-8 text-[9px] font-black uppercase bg-slate-900 hover:bg-black text-white border-none">Deploy Protocol</Button>
+                   <Button size="sm" onClick={() => handleIntervene(alert)} className="flex-1 h-8 text-[9px] font-black uppercase bg-emerald-600 hover:bg-emerald-700 text-white border-none shadow-sm shadow-emerald-100">Deploy Protocol</Button>
                 </div>
               </div>
             )}

@@ -107,7 +107,7 @@ export default function AttendanceIntelligenceTab() {
     <div className="space-y-6 animate-in fade-in duration-700 pb-10">
       {/* 1. KPI CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="p-5 rounded-xl bg-slate-900 shadow-sm text-white relative overflow-hidden group border border-slate-800">
+        <Card className="p-5 rounded-xl bg-indigo-600 shadow-lg text-white relative overflow-hidden group border border-indigo-500 shadow-indigo-100">
           <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-4">Overall Attendance</p>
           <div className="flex items-end justify-between">
             <p className="text-3xl font-black leading-none">{stats.avg}%</p>
@@ -152,7 +152,7 @@ export default function AttendanceIntelligenceTab() {
                 <div className="flex items-center gap-2">
                    <div className="flex bg-slate-100 p-0.5 rounded-md border border-slate-200">
                       {["7D", "30D", "SEM"].map(range => (
-                        <button key={range} onClick={() => setTimeRange(range)} className={cn("px-2 py-0.5 rounded-md text-[8px] font-bold uppercase transition-all", timeRange === range ? "bg-slate-900 text-white shadow-sm" : "text-slate-400")}>{range}</button>
+                         <button key={range} onClick={() => setTimeRange(range)} className={cn("px-2 py-0.5 rounded-md text-[8px] font-bold uppercase transition-all", timeRange === range ? "bg-indigo-600 text-white shadow-md" : "text-slate-400 hover:text-slate-600")}>{range}</button>
                       ))}
                    </div>
                    <select value={deptFilter} onChange={(e) => setDeptFilter(e.target.value)} className="bg-slate-50 border border-slate-200 rounded-md px-2 h-6 text-[8px] font-bold uppercase outline-none focus:ring-1 focus:ring-indigo-500">
@@ -167,7 +167,7 @@ export default function AttendanceIntelligenceTab() {
             
             <div className="flex items-center gap-2">
                <Button size="sm" onClick={() => toast.error("Dispatching Warning...")} className="h-8 px-4 bg-rose-600 text-white rounded-lg text-[10px] font-bold uppercase">Dispatch Alert</Button>
-               <Button size="sm" onClick={() => toast.info("Assigning Mentor...")} className="h-8 px-4 bg-slate-900 text-white rounded-lg text-[10px] font-bold uppercase">Assign Mentor</Button>
+                <Button size="sm" onClick={() => toast.info("Assigning Mentor...")} className="h-8 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[10px] font-bold uppercase border-none shadow-sm shadow-indigo-200">Assign Mentor</Button>
             </div>
           </div>
           

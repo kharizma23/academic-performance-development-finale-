@@ -71,7 +71,7 @@ export default function InterventionCentreTab() {
       </div>
     </div>
 
-    <Card className="md:col-span-4 p-5 border border-slate-200 shadow-sm bg-slate-900 text-white relative overflow-hidden">
+    <Card className="md:col-span-4 p-5 border border-indigo-200 shadow-lg bg-indigo-600 text-white relative overflow-hidden">
       <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-widest relative z-10">Neural Risk Matrix</h2>
       <div className="flex items-end justify-between gap-1.5 mt-6 relative z-10 h-16">
         {[30, 50, 40, 65, 25, 55, 75].map((h, i) => (
@@ -106,7 +106,7 @@ export default function InterventionCentreTab() {
                 <h3 className="text-sm font-black text-slate-900 uppercase truncate w-40">{item.student_name}</h3>
                 <p className="text-[8px] font-bold text-slate-400 uppercase mt-0.5 tracking-widest">{item.student_id}</p>
               </div>
-              <div className="h-8 w-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-slate-900 group-hover:text-white transition-all cursor-pointer">
+              <div className="h-8 w-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-blue-600 group-hover:text-white transition-all cursor-pointer shadow-sm border border-slate-100">
                 <ArrowUpRight className="h-4 w-4" />
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function InterventionCentreTab() {
             <Button 
               size="sm"
               onClick={() => { setSelectedIntervention(item); setIsActionPanelOpen(true); }}
-              className="bg-slate-900 hover:bg-slate-800 text-white font-black rounded-lg text-[9px] uppercase tracking-widest h-8 px-4"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-lg text-[9px] uppercase tracking-widest h-8 px-4 border-none shadow-sm shadow-indigo-100"
             >
               Action
             </Button>
@@ -167,7 +167,7 @@ export default function InterventionCentreTab() {
       </Button>
       <div className="p-6">
         <div className="flex items-center gap-4 mb-6">
-          <div className="h-10 w-10 rounded-lg bg-slate-900 text-white flex items-center justify-center">
+          <div className="h-10 w-10 rounded-lg bg-indigo-600 text-white flex items-center justify-center shadow-lg">
             <Target className="h-5 w-5" />
           </div>
           <div>

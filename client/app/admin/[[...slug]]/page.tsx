@@ -48,6 +48,7 @@ import {
     Home,
     Search as SearchIcon,
     ChevronDown,
+    ChevronLeft,
     BookOpen,
     ClipboardList,
     MessageSquare,
@@ -82,7 +83,6 @@ import SubjectIntelligenceTab from "@/components/admin/SubjectIntelligenceTab"
 import SkillIntelligenceTab from "@/components/admin/SkillIntelligenceTab"
 import CareerPredictionTab from "@/components/admin/CareerPredictionTab"
 import InterventionCentreTab from "@/components/admin/InterventionCentreTab"
-import AIAssistant from "@/components/admin/AIAssistant"
 import FeedbackAnalyticsTab from "@/components/admin/FeedbackAnalyticsTab"
 import WeeklyReportsTab from "@/components/admin/WeeklyReportsTab"
 import AttendanceIntelligenceTab from "@/components/admin/AttendanceIntelligenceTab"
@@ -114,7 +114,6 @@ const SIDEBAR_ITEMS = [
     { id: 'acad-intel', label: 'Academic Intelligence', icon: GraduationCap, category: 'Performance' },
     { id: 'career-pred', label: 'Career Prediction', icon: Globe, category: 'Career' },
     { id: 'interv-center', label: 'Intervention Center', icon: ShieldCheck, category: 'Action' },
-    { id: 'ai-chat', label: 'AI Chat Assistant', icon: Mic, category: 'Action' },
     { id: 'feedback-anal', label: 'Feedback Analytics', icon: ThumbsUp, category: 'Analysis' },
     { id: 'weekly-reports', label: 'Weekly Reports', icon: FileText, category: 'Analysis' },
     { id: 'attend-intel', label: 'Attendance Intelligence', icon: Activity, category: 'Operations' },
@@ -294,7 +293,7 @@ function AddStudentModal({ isOpen, onClose, onSuccess }: { isOpen: boolean, onCl
         try {
             const token = localStorage.getItem('token');
             const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
-            const url = `http://${hostname}:8000/admin/students`;
+            const url = `http://${hostname}:8001/admin/students`;
             const res = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -377,7 +376,7 @@ function AddStaffModal({ isOpen, onClose, onSuccess }: { isOpen: boolean, onClos
         try {
             const token = localStorage.getItem('token');
             const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
-            const url = `http://${hostname}:8000/admin/staff`;
+            const url = `http://${hostname}:8001/admin/staff`;
             const res = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -575,7 +574,6 @@ export default function AdminDashboard() {
         slug?.[0] === 'stud-intel' ? 'stud-intel' : 
         slug?.[0] === 'subj-intel' ? 'subj-intel' : 
         slug?.[0] === 'intervention-center' ? 'interv-center' :
-        slug?.[0] === 'ai-assistant' ? 'ai-chat' :
         slug?.[0] === 'users' ? 'users' :
         slug?.[0] === 'predictive' ? 'predictive' :
         slug?.[0] === 'dept' ? 'dept' :
@@ -589,7 +587,6 @@ export default function AdminDashboard() {
         slug?.[0] === 'stud-intel' ? 'stud-intel' : 
         slug?.[0] === 'subj-intel' ? 'subj-intel' : 
         slug?.[0] === 'intervention-center' ? 'interv-center' :
-        slug?.[0] === 'ai-assistant' ? 'ai-chat' :
         slug?.[0] === 'users' ? 'users' :
         slug?.[0] === 'predictive' ? 'predictive' :
         slug?.[0] === 'dept' ? 'dept' :
@@ -607,6 +604,8 @@ export default function AdminDashboard() {
     const [isAddStudentOpen, setIsAddStudentOpen] = useState(false)
     const [isAddStaffOpen, setIsAddStaffOpen] = useState(false)
     const [pagination, setPagination] = useState({ total: 0, page: 1, pages: 1, limit: 24 })
+    const [deptFilter, setDeptFilter] = useState('ALL')
+    const [yearFilter, setYearFilter] = useState('ALL')
 
     // --- Targeted Assessment State (Departmental) ---
     const [assessmentDeptFilter, setAssessmentDeptFilter] = useState('ALL');
@@ -683,7 +682,7 @@ export default function AdminDashboard() {
             const data = await fetchPredictiveRanks(predictiveYearFilter, predictiveDeptFilter);
             setPredictiveRanks(data);
         } catch (err) {
-            setError("Institutional Intelligence Node Disconnected. Ensure API service is operational on port 8000.");
+            setError("Institutional Intelligence Node Disconnected. Ensure API service is operational on port 8001.");
         } finally {
             setIsGeneratingRanks(false);
         }
@@ -826,7 +825,12 @@ export default function AdminDashboard() {
                         return;
                     }
                     
-                    const url = getApiUrl(`/admin/students?skip=${skip}&limit=${pagination.limit}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}`);
+                    let queryParams = `?skip=${skip}&limit=${pagination.limit}`;
+                    if (searchQuery) queryParams += `&search=${encodeURIComponent(searchQuery)}`;
+                    if (deptFilter !== 'ALL') queryParams += `&department=${encodeURIComponent(deptFilter)}`;
+                    if (yearFilter !== 'ALL') queryParams += `&year=${yearFilter}`;
+
+                    const url = getApiUrl(`/admin/students${queryParams}&t=${Date.now()}`);
                     
                     const res = await robustFetch(url, {
                         headers: { 'Authorization': `Bearer ${token}` }
@@ -835,7 +839,8 @@ export default function AdminDashboard() {
                     if (res.ok) {
                         const result = await res.json();
                         setSearchResults(result.students || []);
-                        setCache(`admin_directory_${skip}_${pagination.limit}_${searchQuery}`, result, 300000); // 5 min cache
+                        // Reduce cache TTL for directory during stabilization
+                        setCache(`admin_directory_${skip}_${pagination.limit}_${searchQuery}`, result, 1000); 
                         setPagination({ ...pagination, total: result.total, page: result.page, pages: result.pages });
                     } else {
                         console.error("Student search API returned error status:", res.status);
@@ -870,7 +875,7 @@ export default function AdminDashboard() {
         // Debounce typed queries
         const timer = setTimeout(() => performSearch(), 400);
         return () => clearTimeout(timer);
-    }, [searchQuery, userType, activeTab]);
+    }, [searchQuery, userType, activeTab, deptFilter, yearFilter]);
 
     const handleDeleteUser = async (id: string) => {
         if (!confirm("Are you sure you want to delete this user? This action cannot be undone.")) return
@@ -1055,18 +1060,13 @@ export default function AdminDashboard() {
                 <header className="sticky top-0 z-[100] h-12 border-b border-slate-200 bg-white/80 backdrop-blur-md px-5 flex items-center shrink-0 w-full transition-all">
                     <div className="flex h-full w-full items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
-                            {activeTab !== 'overview' && (
-                                <Button 
-                                    variant="ghost" 
-                                    onClick={() => {
-                                        setActiveTab('overview');
-                                        router.push('/admin');
-                                    }}
-                                    className="h-7 w-7 p-0 rounded-lg border border-slate-200 hover:bg-slate-50 transition-all flex items-center justify-center shrink-0"
-                                >
-                                    <ArrowLeft className="h-3 w-3 text-slate-500" />
-                                </Button>
-                            )}
+                            <button 
+                                onClick={() => window.history.back()}
+                                className="h-7 w-7 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-all shadow-sm group shrink-0"
+                            >
+                                <ChevronLeft className="h-3.5 w-3.5 group-hover:-translate-x-0.5 transition-transform" />
+                            </button>
+                            <div className="h-5 w-px bg-slate-200 mx-1" />
                             <div className="h-7 w-7 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100">
                                 <Activity className="h-3.5 w-3.5" />
                             </div>
@@ -1323,13 +1323,6 @@ export default function AdminDashboard() {
                     </div>
                 )}
 
-                {/* --- AI CHAT ASSISTANT TAB --- */}
-                {activeTab === 'ai-chat' && (
-                    <div className="w-full mt-4">
-                        <AIAssistant />
-                    </div>
-                )}
-
                 {/* --- 3. PREDICTIVE VIEW --- */}
                 {activeTab === 'predictive' && (
                     <div className="w-full space-y-4 lg:col-span-12">
@@ -1468,6 +1461,11 @@ export default function AdminDashboard() {
                         setIsAddStaffOpen={setIsAddStaffOpen}
                         pagination={pagination}
                         handlePageChange={(p) => performSearch(p)}
+                        deptFilter={deptFilter}
+                        setDeptFilter={setDeptFilter}
+                        yearFilter={yearFilter}
+                        setYearFilter={setYearFilter}
+                        handleResetFilters={() => { setDeptFilter('ALL'); setYearFilter('ALL'); setSearchQuery(''); }}
                     />
                 </div>
             )}

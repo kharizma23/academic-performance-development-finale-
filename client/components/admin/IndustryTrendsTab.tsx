@@ -18,7 +18,7 @@ export default function IndustryTrendsTab() {
  const getApiUrl = (path: string) => {
  const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
  const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
- return `http://${apiHost}:8000${path}`;
+ return `http://${apiHost}:8001${path}`;
  };
 
  const fetchTrends = async () => {
@@ -121,7 +121,7 @@ export default function IndustryTrendsTab() {
         <h3 className="text-xl font-black text-slate-900 uppercase leading-none">Skill Dynamic Hub</h3>
         <p className="text-[10px] font-bold text-slate-500 leading-relaxed uppercase max-w-2xl">Scanning global hiring protocols from Top 500 tech firms to identify institutional skill-gap clusters. Deploying real-time curriculum adjustments.</p>
       </div>
-      <Button className="bg-slate-900 hover:bg-slate-800 text-white font-black uppercase text-[10px] h-9 px-6 rounded-lg shadow-md shrink-0 transition-all active:scale-95">
+      <Button className="bg-amber-600 hover:bg-amber-700 text-white font-black uppercase text-[10px] h-9 px-6 rounded-lg shadow-md shadow-amber-200 shrink-0 transition-all active:scale-95 border-none">
         Launch Evolution Node
       </Button>
     </div>
@@ -129,7 +129,7 @@ export default function IndustryTrendsTab() {
 
   {/* Bottom Sector Highlights */}
   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <Card className="p-5 rounded-xl bg-slate-900 text-white relative shadow-sm overflow-hidden group">
+    <Card className="p-5 rounded-xl bg-white border border-slate-200 text-slate-900 relative shadow-md overflow-hidden group">
       <div className="absolute bottom-0 right-0 p-6 opacity-10">
         <Layers className="h-16 w-16" />
       </div>

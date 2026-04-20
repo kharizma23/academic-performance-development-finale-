@@ -14,10 +14,10 @@ class GeminiEngine:
         if not self.api_key:
              return "AI REST Node Offline. Key missing."
              
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={self.api_key}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={self.api_key}"
         headers = {'Content-Type': 'application/json'}
         payload = {
-            "contents": [{"parts": [{"text": f"Instruction: Respond concisely as a high-performance academic AI assistant. Query: {prompt}"}]}],
+            "contents": [{"parts": [{"text": f"System: You are a friendly and high-performance academic assistant. You must answer ANY question asked, no matter what it is. Promptly and accurately. Query: {prompt}"}]}],
             "generationConfig": {
                 "temperature": 0.3,
                 "maxOutputTokens": 800,

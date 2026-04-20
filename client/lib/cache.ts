@@ -69,11 +69,20 @@ export async function robustFetch(url: string, options: RequestInit = {}, timeou
 export async function cachedFetch(url: string, options?: RequestInit, ttl = 60_000): Promise<any> {
   const cacheKey = url;
   const cached = getCached(cacheKey);
-  if (cached !== null) return cached;
 
-  const res = await robustFetch(url, options);
-  if (!res.ok) throw new Error(`Neural Node Logic Error: ${res.status} ${url}`);
-  const data = await res.json();
-  setCache(cacheKey, data, ttl);
-  return data;
+  try {
+    const res = await robustFetch(url, options);
+    if (!res.ok) {
+       // If fetch fails but we have cache, return cache as fallback
+       if (cached !== null) return cached;
+       throw new Error(`Neural Node Logic Error: ${res.status} ${url}`);
+    }
+    const data = await res.json();
+    setCache(cacheKey, data, ttl);
+    return data;
+  } catch (err) {
+    // If backend is totally down, return cached data if available
+    if (cached !== null) return cached;
+    throw err;
+  }
 }

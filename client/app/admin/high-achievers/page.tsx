@@ -157,27 +157,27 @@ export default function HighAchieversPage() {
  return (
  <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 p-6 md:p-12">
  {/* Header */}
- <div className="mb-8 flex flex-col gap-6">
+ <div className="mb-6 flex flex-col gap-4">
  <button 
  onClick={() => router.push('/admin')}
- className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/80 hover:bg-white text-slate-600 font-bold transition-all border border-slate-200 shadow-sm w-fit"
+ className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/80 hover:bg-white text-slate-600 text-[10px] font-bold tracking-widest transition-all border border-slate-200 shadow-sm w-fit uppercase"
  >
- <ArrowLeft className="h-5 w-5" />
- Previous (Admin Dashboard)
+ <ArrowLeft className="h-3.5 w-3.5" />
+ Previous
  </button>
  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
  <div>
- <h1 className="text-6xl md:text-7xl font-black  text-slate-900 flex items-center gap-6">
- <Trophy className="h-16 w-16 text-yellow-500" />
+ <h1 className="text-sm font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
+ <Trophy className="h-6 w-6 text-yellow-500" />
  High Achievers Intelligence
  </h1>
- <p className="text-slate-600 font-bold text-2xl mt-4">AI-powered student excellence recognition system</p>
+ <p className="text-slate-500 font-bold text-[10px] tracking-widest uppercase mt-1">AI-powered student excellence recognition system</p>
  </div>
  <button
  onClick={handleDownloadReport}
- className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
+ className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg text-[10px] font-black uppercase tracking-widest hover:shadow-lg transition-all"
  >
- <Download className="h-5 w-5" />
+ <Download className="h-3.5 w-3.5" />
  Download Report
  </button>
  </div>
@@ -209,13 +209,13 @@ export default function HighAchieversPage() {
  )}
 
         {/* Tabs */}
-        <div className="mb-10 flex flex-wrap gap-4 p-3 bg-white rounded-2xl shadow-sm border-2 border-slate-200">
+        <div className="mb-8 flex flex-wrap gap-2 p-1 bg-white rounded-xl shadow-sm border border-slate-200 max-w-fit">
           {[
-            { id: "leaderboard", label: "🏆 Leaderboard", icon: Trophy },
-            { id: "growth", label: "📈 Growth", icon: ArrowUpRight },
-            { id: "skills", label: "💻 Skills", icon: Gem },
-            { id: "toppers", label: "👑 Toppers", icon: Award },
-            { id: "placement", label: "🎯 Placement", icon: Target },
+            { id: "leaderboard", label: "Leaderboard", icon: Trophy },
+            { id: "growth", label: "Growth", icon: ArrowUpRight },
+            { id: "skills", label: "Skills", icon: Gem },
+            { id: "toppers", label: "Toppers", icon: Award },
+            { id: "placement", label: "Placement", icon: Target },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -223,13 +223,13 @@ export default function HighAchieversPage() {
                 setActiveTab(tab.id as any);
                 loadTabData(tab.id);
               }}
-              className={`px-8 py-4 rounded-xl font-black text-xl transition-all shadow-sm ${
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-sm ${
                 activeTab === tab.id
-                  ? "bg-blue-600 text-white shadow-xl scale-105"
-                  : "text-slate-600 bg-slate-50 hover:bg-slate-100 hover:scale-105"
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "text-slate-500 bg-slate-50 hover:bg-slate-100"
               }`}
             >
-              <span className="text-2xl mr-2">{tab.icon.name}</span>
+              <tab.icon className="h-3.5 w-3.5 shrink-0" />
               {tab.label}
             </button>
           ))}
@@ -318,22 +318,22 @@ export default function HighAchieversPage() {
  function StatCard({ icon: Icon, label, value, color }: any) {
   const colors: any = {
   blue: "from-blue-500 to-blue-600",
-  yellow: "from-yellow-500 to-yellow-600",
-  red: "from-red-500 to-red-600",
+  yellow: "from-yellow-400 to-yellow-500",
+  red: "from-rose-500 to-rose-600",
   purple: "from-purple-500 to-purple-600",
-  green: "from-green-500 to-green-600"
+  green: "from-emerald-500 to-emerald-600"
   };
  
   return (
-  <div className={`py-12 px-14 min-h-[18rem] flex flex-col justify-center bg-gradient-to-br ${colors[color] || colors.blue} text-white rounded-[3rem] shadow-2xl hover:shadow-3xl transition-all`}>
-  <div className="flex items-center justify-between">
+  <div className={`p-6 min-h-[8rem] flex flex-col justify-center bg-gradient-to-br ${colors[color] || colors.blue} text-white rounded-xl shadow-md transition-all relative overflow-hidden group`}>
+  <div className="flex items-center justify-between relative z-10">
   <div>
-  <p className="text-xl font-black opacity-90 uppercase tracking-[0.2em]">{label}</p>
-  <p className="text-6xl font-black mt-4">
+  <p className="text-[9px] font-black opacity-90 uppercase tracking-widest">{label}</p>
+  <p className="text-base font-black mt-1 leading-none">
   {typeof value === 'string' ? value.substring(0, 20) : value}
   </p>
   </div>
-  <Icon className="h-28 w-28 opacity-30 shrink-0 ml-4" />
+  <Icon className="h-10 w-10 opacity-30 shrink-0 transform group-hover:scale-110 transition-transform" />
   </div>
   </div>
   );
@@ -343,7 +343,7 @@ function LeaderboardView({ topAchievers, allAchievers, searchText, onSearchChang
  return (
  <div className="space-y-12">
  {/* Filters */}
- <div className="flex flex-wrap gap-6 p-10 bg-white rounded-[2.5rem] border-4 border-blue-100 shadow-2xl">
+ <div className="flex flex-wrap gap-6 p-10 bg-white rounded-xl border border-blue-100 shadow-sm">
  <div className="flex-1 min-w-60">
  <div className="relative">
  <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-blue-400" />
@@ -359,7 +359,7 @@ function LeaderboardView({ topAchievers, allAchievers, searchText, onSearchChang
  <select
  value={filters.department}
  onChange={(e) => onFilterChange({ ...filters, department: e.target.value })}
- className="px-8 py-5 bg-white border-2 border-blue-100 rounded-2xl text-xl font-black text-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-600/20"
+ className="px-4 py-2 bg-white border-2 border-blue-100 rounded-2xl text-xl font-black text-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-600/20"
  >
  <option value="">Global Departments</option>
  {DEPARTMENTS.map((d) => (
@@ -373,7 +373,7 @@ function LeaderboardView({ topAchievers, allAchievers, searchText, onSearchChang
  placeholder="Year"
  value={filters.year || ""}
  onChange={(e) => onFilterChange({ ...filters, year: e.target.value ? parseInt(e.target.value) : null })}
- className="px-8 py-5 bg-white border-2 border-blue-100 rounded-2xl text-xl font-black text-blue-900 w-36 focus:outline-none focus:ring-4 focus:ring-blue-600/20"
+ className="px-4 py-2 bg-white border-2 border-blue-100 rounded-2xl text-xl font-black text-blue-900 w-36 focus:outline-none focus:ring-4 focus:ring-blue-600/20"
  />
  </div>
 
@@ -385,40 +385,40 @@ function LeaderboardView({ topAchievers, allAchievers, searchText, onSearchChang
  </div>
 
  {/* Full Leaderboard Table */}
- <div className="bg-white rounded-[3rem] shadow-2xl border-4 border-blue-100 overflow-hidden">
+ <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
  <div className="overflow-x-auto">
  <table className="w-full text-left">
- <thead className="bg-blue-600 text-white">
+ <thead className="bg-slate-50 border-b border-slate-100">
  <tr>
- <th className="px-12 py-8 font-black uppercase tracking-widest text-sm">Rank</th>
- <th className="px-12 py-8 font-black uppercase tracking-widest text-sm">Achiever</th>
- <th className="px-12 py-8 font-black uppercase tracking-widest text-sm">Domain</th>
- <th className="px-12 py-8 text-center font-black uppercase tracking-widest text-sm">CGPA</th>
- <th className="px-12 py-8 text-center font-black uppercase tracking-widest text-sm">Matrix Score</th>
+ <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-500">Rank</th>
+ <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-500">Achiever</th>
+ <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-500">Domain</th>
+ <th className="px-6 py-4 text-center font-black uppercase tracking-widest text-[9px] text-slate-500">CGPA</th>
+ <th className="px-6 py-4 text-center font-black uppercase tracking-widest text-[9px] text-slate-500">Matrix Score</th>
  </tr>
  </thead>
- <tbody className="divide-y divide-blue-50">
+ <tbody className="divide-y divide-slate-50">
  {allAchievers.map((student: any, idx: number) => (
- <tr key={student.id} className="hover:bg-blue-50/50 transition-all group">
- <td className="px-12 py-8">
- <span className="h-12 w-12 rounded-xl bg-blue-50 border-2 border-blue-100 flex items-center justify-center font-black text-blue-900 shadow-sm">
+ <tr key={student.id} className="hover:bg-slate-50/50 transition-all group">
+ <td className="px-6 py-3">
+ <span className="h-8 w-8 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center font-black text-blue-700 text-[10px] shadow-sm">
  #{idx + 1}
  </span>
  </td>
- <td className="px-12 py-8">
- <p className="font-black text-blue-900 text-2xl  uppercase ">{student.name}</p>
- <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mt-1">Roll: {student.roll_number}</p>
+ <td className="px-6 py-3">
+ <p className="font-black text-slate-900 text-xs uppercase">{student.name}</p>
+ <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Roll: {student.roll_number}</p>
  </td>
- <td className="px-12 py-8 font-black text-slate-500 uppercase tracking-widest text-sm">
+ <td className="px-6 py-3 font-black text-slate-600 uppercase tracking-widest text-[10px]">
  {student.department}
  </td>
- <td className="px-12 py-8 text-center">
- <span className="inline-block bg-blue-600 text-white font-black px-8 py-3 rounded-2xl text-2xl shadow-xl">
+ <td className="px-6 py-3 text-center">
+ <span className="inline-block bg-blue-600 text-white font-black px-3 py-1 rounded text-[11px] shadow-sm">
  {student.cgpa}
  </span>
  </td>
- <td className="px-12 py-8 text-center">
- <span className="inline-block bg-emerald-100 text-emerald-700 font-black px-8 py-3 rounded-2xl text-2xl border-2 border-emerald-200">
+ <td className="px-6 py-3 text-center">
+ <span className="inline-block bg-emerald-50 text-emerald-700 font-black px-3 py-1 rounded text-[11px] border border-emerald-200">
  {student.composite_score || "94.2"}
  </span>
  </td>
@@ -442,11 +442,11 @@ function TopRankCard({ student, rank }: any) {
 
  return (
  <div className={`bg-gradient-to-br ${colors[rank as keyof typeof colors]} rounded-2xl p-8 text-center text-white shadow-xl transform hover:scale-105 transition-transform`}>
- <div className="text-6xl mb-3">{medals[rank as keyof typeof medals]}</div>
- <h3 className="text-3xl font-black">{student.name}</h3>
+ <div className="text-sm mb-3">{medals[rank as keyof typeof medals]}</div>
+ <h3 className="text-base font-black">{student.name}</h3>
  <p className="text-base opacity-90 mt-2">{student.department} | Year {student.year}</p>
  <div className="mt-6 p-4 bg-white bg-opacity-20 rounded-xl">
- <p className="text-4xl font-black">{student.cgpa}</p>
+ <p className="text-lg font-black">{student.cgpa}</p>
  <p className="text-sm opacity-90">CGPA</p>
  </div>
  </div>
@@ -497,10 +497,10 @@ function GrowthView({ growth, filters, onFilterChange }: any) {
  
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
  {filteredGrowth.slice(0, 12).map((student: any) => (
- <div key={student.id} className="p-8 bg-white rounded-2xl border-2 border-green-200 shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all cursor-pointer">
+ <div key={student.id} className="p-5 bg-white rounded-2xl border-2 border-green-200 shadow-lg hover:shadow-sm hover:-translate-y-1 hover:scale-[1.02] transition-all cursor-pointer">
  <div className="flex items-center justify-between mb-5">
- <h3 className="text-2xl font-black text-slate-900">{student.name}</h3>
- <span className="text-4xl">{student.badge?.charAt(0)}</span>
+ <h3 className="text-sm font-black text-slate-900">{student.name}</h3>
+ <span className="text-lg">{student.badge?.charAt(0)}</span>
  </div>
  <div className="space-y-3 text-lg">
  <p className="text-slate-700"><strong>Department:</strong> {student.department}</p>
@@ -508,7 +508,7 @@ function GrowthView({ growth, filters, onFilterChange }: any) {
  <p className="text-slate-700"><strong>Previous CGPA:</strong> {student.previous_cgpa}</p>
  <p className="text-slate-700"><strong>Current CGPA:</strong> {student.current_cgpa}</p>
  <div className="mt-4 p-4 bg-green-50 rounded-xl">
- <p className="font-black text-green-700 text-2xl">📈 {student.growth_percent}% Growth</p>
+ <p className="font-black text-green-700 text-sm">📈 {student.growth_percent}% Growth</p>
  </div>
  </div>
  </div>
@@ -577,13 +577,13 @@ function SkillsView({ skills, filters, onFilterChange }: any) {
 function SkillCategory({ title, category }: any) {
  return (
  <div>
- <h2 className="text-2xl font-black text-slate-900 mb-4">{title}</h2>
+ <h2 className="text-sm font-black text-slate-900 mb-4">{title}</h2>
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
  {category?.map((student: any, idx: number) => (
- <div key={student.id} className="p-8 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl border-2 border-blue-200 shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all cursor-pointer">
+ <div key={student.id} className="p-5 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl border-2 border-blue-200 shadow-lg hover:shadow-sm hover:-translate-y-1 hover:scale-[1.02] transition-all cursor-pointer">
  <div className="flex items-center justify-between mb-4">
- <h3 className="font-black text-slate-900 text-2xl">{idx + 1}. {student.name}</h3>
- <span className="text-4xl">{student.badge?.charAt(0)}</span>
+ <h3 className="font-black text-slate-900 text-sm">{idx + 1}. {student.name}</h3>
+ <span className="text-lg">{student.badge?.charAt(0)}</span>
  </div>
  <div className="space-y-2 text-lg">
  <p className="text-slate-700"><strong>Dept:</strong> {student.department}</p>
@@ -647,19 +647,19 @@ function ToppersView({ toppers, filters, onFilterChange }: any) {
 
  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
  {filteredToppers.map((student: any, idx: number) => (
- <div key={student.id} className="p-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl border-2 border-purple-200 shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all cursor-pointer">
+ <div key={student.id} className="p-5 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl border-2 border-purple-200 shadow-lg hover:shadow-sm hover:-translate-y-1 hover:scale-[1.02] transition-all cursor-pointer">
  <div className="flex items-start justify-between mb-5">
  <div>
- <h3 className="text-4xl font-black text-slate-900">{student.name}</h3>
+ <h3 className="text-lg font-black text-slate-900">{student.name}</h3>
  <p className="text-lg text-slate-700 font-bold mt-1">{student.department} Topper</p>
  </div>
- <div className="text-6xl">👑</div>
+ <div className="text-sm">👑</div>
  </div>
  <div className="space-y-3 text-lg">
  <p className="text-slate-700"><strong>Roll:</strong> {student.roll_number}</p>
  <p className="text-slate-700"><strong>Year:</strong> {student.year}</p>
  <div className="mt-5 p-4 bg-white rounded-xl border-2 border-purple-300">
- <p className="font-black text-purple-700 text-5xl">{student.cgpa}</p>
+ <p className="font-black text-purple-700 text-xl">{student.cgpa}</p>
  <p className="text-lg text-slate-500 font-bold mt-1">CGPA</p>
  </div>
  </div>
@@ -715,10 +715,10 @@ function PlacementView({ placement, filters, onFilterChange }: any) {
 
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
  {filteredPlacement.slice(0, 12).map((student: any) => (
- <div key={student.id} className="p-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border-2 border-green-200 shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all cursor-pointer">
+ <div key={student.id} className="p-5 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border-2 border-green-200 shadow-lg hover:shadow-sm hover:-translate-y-1 hover:scale-[1.02] transition-all cursor-pointer">
  <div className="flex items-center justify-between mb-4">
- <h3 className="font-black text-slate-900 text-2xl">{student.name}</h3>
- <span className="text-4xl">🎯</span>
+ <h3 className="font-black text-slate-900 text-sm">{student.name}</h3>
+ <span className="text-lg">🎯</span>
  </div>
  <div className="space-y-3 text-lg mb-6">
  <p className="text-slate-700"><strong>Dept:</strong> {student.department}</p>
@@ -727,11 +727,11 @@ function PlacementView({ placement, filters, onFilterChange }: any) {
  <div className="grid grid-cols-2 gap-4">
  <div className="p-4 bg-white rounded-xl border-2 border-green-200">
  <p className="text-base text-slate-500 font-bold">CGPA</p>
- <p className="font-black text-green-700 text-4xl mt-1">{student.cgpa}</p>
+ <p className="font-black text-green-700 text-lg mt-1">{student.cgpa}</p>
  </div>
  <div className="p-4 bg-white rounded-xl border-2 border-green-200">
  <p className="text-base text-slate-500 font-bold">Placement</p>
- <p className="font-black text-blue-700 text-4xl mt-1">{student.placement_score}%</p>
+ <p className="font-black text-blue-700 text-lg mt-1">{student.placement_score}%</p>
  </div>
  </div>
  </div>

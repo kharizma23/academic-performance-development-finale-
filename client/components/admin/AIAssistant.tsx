@@ -25,7 +25,7 @@ export default function AIAssistant() {
  const [isAssigning, setIsAssigning] = useState(false);
  
  const chatEndRef = useRef<HTMLDivElement>(null);
- const API_BASE = "http://127.0.0.1:8000/api";
+ const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8001") + "/api";
 
  const [sessionId, setSessionId] = useState("");
 
@@ -134,15 +134,15 @@ export default function AIAssistant() {
  };
 
  return (
- <div className="flex flex-col h-full max-h-[calc(100vh-160px)] bg-slate-900 text-slate-100 rounded-xl border border-slate-800 shadow-xl overflow-hidden font-sans relative">
+ <div className="flex flex-col h-full max-h-[calc(100vh-160px)] bg-white text-slate-900 rounded-xl border border-slate-200 shadow-xl overflow-hidden font-sans relative">
   {/* Header Section */}
-  <div className="px-6 py-4 bg-slate-900 border-b border-white/5 flex items-center justify-between">
+  <div className="px-6 py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
     <div className="flex items-center gap-4">
       <button 
         onClick={() => window.location.href = '/admin'}
-        className="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-all border border-white/5 group"
+        className="p-2 bg-white text-slate-700 hover:bg-slate-100 rounded-full transition-all border border-slate-200 group shadow-md"
       >
-        <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:text-emerald-400" />
+        <ArrowLeft className="w-4 h-4 text-slate-600 group-hover:text-emerald-600" />
       </button>
       <div>
         <h1 className="text-sm font-black uppercase flex items-center gap-2">
@@ -165,24 +165,24 @@ export default function AIAssistant() {
         <div className={cn("flex gap-4 max-w-[85%]", msg.role === "user" ? "flex-row-reverse" : "flex-row")}>
           <div className={cn(
             "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center shadow-md",
-            msg.role === "user" ? "bg-slate-800 border border-slate-700" : "bg-emerald-600 shadow-emerald-900/20"
+            msg.role === "user" ? "bg-slate-100 border border-slate-200" : "bg-emerald-600 shadow-emerald-100"
           )}>
-            {msg.role === "user" ? <User size={16} className="text-slate-300" /> : <Bot size={16} className="text-white" />}
+            {msg.role === "user" ? <User size={16} className="text-slate-500" /> : <Bot size={16} className="text-white" />}
           </div>
           <div className="space-y-3">
             <div className={cn(
               "p-4 rounded-xl",
-              msg.role === "user" ? "bg-slate-800 text-slate-100 rounded-tr-none border border-slate-700/50" : "bg-white/5 border border-white/5 rounded-tl-none text-slate-200"
+              msg.role === "user" ? "bg-slate-50 text-slate-900 rounded-tr-none border border-slate-200" : "bg-slate-50 border border-slate-200 rounded-tl-none text-slate-900 shadow-sm"
             )}>
               <p className="text-xs font-semibold leading-relaxed whitespace-pre-wrap">{msg.content}</p>
             </div>
 
             {/* Question Generation View */}
             {msg.intent === "question_generation" && testConfig && i === messages.length - 1 && (
-              <div className="p-4 bg-slate-900 border border-emerald-500/20 rounded-xl space-y-4 shadow-xl animate-in zoom-in-95 duration-300">
-                <div className="flex items-center justify-between pb-2 border-b border-white/5">
-                  <h4 className="text-[10px] font-black text-white uppercase tracking-widest">Test Configuration</h4>
-                  <span className="px-2 py-0.5 bg-emerald-500/10 rounded text-[8px] font-black text-emerald-400 uppercase">{testConfig.questions.length} Items</span>
+              <div className="p-4 bg-white border border-slate-200 rounded-xl space-y-4 shadow-sm animate-in zoom-in-95 duration-300">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest">Test Configuration</h4>
+                  <span className="px-2 py-0.5 bg-emerald-50 rounded text-[8px] font-black text-emerald-600 border border-emerald-100 uppercase">{testConfig.questions.length} Items</span>
                 </div>
 
                 <div className="grid grid-cols-1 gap-3">
@@ -190,7 +190,7 @@ export default function AIAssistant() {
                     <label className="text-[8px] font-bold text-slate-500 uppercase">Title</label>
                     <input 
                       type="text" 
-                      className="w-full bg-slate-950 border border-white/5 rounded-lg px-3 py-2 text-xs font-semibold focus:border-emerald-500 transition-all outline-none"
+                      className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-semibold focus:border-emerald-500 transition-all outline-none text-slate-900"
                       value={testConfig.title}
                       onChange={(e) => setTestConfig({...testConfig, title: e.target.value})}
                     />
@@ -198,7 +198,7 @@ export default function AIAssistant() {
                   <div className="space-y-1">
                     <label className="text-[8px] font-bold text-slate-500 uppercase">Department</label>
                     <select 
-                      className="w-full bg-slate-950 border border-white/5 rounded-lg px-3 py-2 text-xs font-semibold focus:border-emerald-500 transition-all outline-none"
+                      className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-semibold focus:border-emerald-500 transition-all outline-none text-slate-900"
                       value={testConfig.department}
                       onChange={(e) => setTestConfig({...testConfig, department: e.target.value})}
                     >
@@ -256,7 +256,7 @@ export default function AIAssistant() {
   </div>
 
   {/* Input Area */}
-  <div className="p-6 bg-slate-900/60 border-t border-white/5 space-y-4">
+  <div className="p-6 bg-slate-50/50 border-t border-slate-100 space-y-4">
     <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
       {[
         "10 MCQs on DBMS",

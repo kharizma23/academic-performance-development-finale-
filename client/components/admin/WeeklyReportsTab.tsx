@@ -20,7 +20,7 @@ export default function WeeklyReportsTab() {
   const getApiUrl = (path: string) => {
     const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
     const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
-    return `http://${apiHost}:8000${path}`;
+    return `http://${apiHost}:8001${path}`;
   };
 
   const fetchReports = async () => {
@@ -111,14 +111,14 @@ export default function WeeklyReportsTab() {
             <p className="text-[10px] font-bold text-white uppercase leading-snug">"Up 4.2% based on latest nodes."</p>
           </div>
         </Card>
-        <Card className="p-5 rounded-xl bg-indigo-900 shadow-sm text-white relative overflow-hidden group">
+        <Card className="p-5 rounded-xl bg-indigo-500 shadow-lg text-white relative overflow-hidden group border border-indigo-400">
           <p className="text-[10px] font-bold uppercase text-indigo-400 tracking-widest mb-2">Mean Attendance</p>
           <p className="text-2xl font-black mb-4">88.5%</p>
           <div className="p-2.5 bg-white/10 rounded-lg border border-white/10">
              <p className="text-[10px] font-bold text-white uppercase leading-snug">"High-density stability in vectors."</p>
           </div>
         </Card>
-        <Card className="p-5 rounded-xl bg-slate-900 shadow-sm text-white relative overflow-hidden group">
+        <Card className="p-5 rounded-xl bg-blue-700 shadow-lg text-white relative overflow-hidden group border border-blue-600">
           <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-2">Syllabus Depth</p>
           <p className="text-2xl font-black mb-4">75.0%</p>
           <div className="p-2.5 bg-white/10 rounded-lg border border-white/10">

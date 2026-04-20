@@ -134,85 +134,85 @@ export default function DepartmentalTab() {
  />
  <ShieldCheck className="h-20 w-20 shrink-0 text-slate-700 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shrink-0" />
  </div>
- <div className="text-center space-y-4">
- <h3 className="text-6xl font-black text-blue-900 uppercase ">Generating Intelligence Report</h3>
- <p className="text-xl font-medium tracking-[0.3em] text-blue-700 uppercase animate-pulse">Syncing Departmental Nodes & AI Insights...</p>
+ <div className="text-center space-y-2">
+ <h3 className="text-xl font-bold text-slate-800 uppercase tracking-tight">Generating Intelligence Report</h3>
+ <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase animate-pulse">Syncing Departmental Nodes...</p>
  </div>
  </motion.div>
  )}
  </AnimatePresence>
 
  {/* SECTION 1: DEPARTMENT OVERVIEW HEADER */}
- <div className="relative overflow-hidden group p-14 mb-12 bg-white rounded-3xl border border-blue-300 shadow-2xl">
+ <div className="relative overflow-hidden group p-6 mb-6 bg-white rounded-2xl border border-slate-200 shadow-sm">
 
- <div className="relative z-10 flex flex-col xl:flex-row items-center justify-between gap-12">
- <div className="flex items-center gap-10">
- <div className="h-24 w-24 shrink-0 rounded-[2rem] bg-slate-100 flex items-center justify-center border border-slate-300 shadow-xl">
- <Brain className="h-12 w-12 shrink-0 text-slate-700" />
- </div>
- <div className="space-y-4">
+ <div className="relative z-10 flex flex-col xl:flex-row items-center justify-between gap-6">
  <div className="flex items-center gap-6">
- <span className="px-5 py-2 bg-blue-100 text-slate-700 text-lg font-black uppercase tracking-widest border border-slate-300 rounded-full">Department Node</span>
- <div className="h-4 w-4 shrink-0 rounded-full bg-slate-600 animate-pulse shadow-[0_0_20px_rgba(148,171,144,1)]"></div>
+ <div className="h-12 w-12 shrink-0 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-200">
+ <Brain className="h-6 w-6 shrink-0 text-slate-600" />
+ </div>
+ <div className="space-y-1">
+ <div className="flex items-center gap-2">
+ <span className="px-2 py-0.5 bg-indigo-50 text-indigo-700 text-[8px] font-bold uppercase tracking-widest border border-indigo-100 rounded-full">Department Node</span>
+ <div className="h-2 w-2 shrink-0 rounded-full bg-emerald-500 animate-pulse"></div>
  </div>
  <div className="flex flex-col">
  <select
- className="text-4xl md:text-7xl font-black bg-transparent border-none outline-none cursor-pointer  text-blue-900 focus:ring-0 appearance-none leading-none max-w-full uppercase"
+ className="text-2xl font-black bg-transparent border-none outline-none cursor-pointer text-slate-900 focus:ring-0 appearance-none leading-none max-w-full uppercase"
  value={selectedDept}
  onChange={(e) => setSelectedDept(e.target.value)}
  >
- {DEPARTMENTS.map(d => <option key={d} value={d} className="text-4xl font-black bg-white text-blue-900">{d === "ALL" ? "GLOBAL" : d} ENGINE</option>)}
+ {DEPARTMENTS.map(d => <option key={d} value={d} className="text-sm font-bold bg-white text-slate-900">{d === "ALL" ? "GLOBAL" : d} ENGINE</option>)}
  </select>
- <div className="text-lg font-black text-blue-700 mt-6 flex flex-wrap items-center gap-10 uppercase tracking-widest">
- <div className="flex items-center gap-3">
- <UserCheck className="h-6 w-6 shrink-0 text-slate-700" />
- HOD: <span className="text-blue-900 bg-slate-100 px-4 py-2 rounded-xl border border-slate-300 shadow-sm">{data.metrics.hod_name}</span>
+ <div className="text-[10px] font-bold text-slate-400 mt-2 flex flex-wrap items-center gap-4 uppercase tracking-widest">
+ <div className="flex items-center gap-1.5">
+ <UserCheck className="h-3 w-3 shrink-0 text-slate-400" />
+ HOD: <span className="text-slate-900 bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200">{data.metrics.hod_name}</span>
  </div>
  <span className="opacity-20 hidden md:block">|</span>
- <div className="flex items-center gap-3">
- <Users className="h-6 w-6 shrink-0 text-slate-700" />
- Faculty: <span className="text-blue-900 bg-slate-100 px-4 py-2 rounded-xl border border-slate-300 shadow-sm">{data.metrics.total_faculty} Nodes</span>
+ <div className="flex items-center gap-1.5">
+ <Users className="h-3 w-3 shrink-0 text-slate-400" />
+ Faculty: <span className="text-slate-900 bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200">{data.metrics.total_faculty} Nodes</span>
  </div>
  </div>
  </div>
  </div>
  </div>
 
- <div className="flex flex-wrap gap-16 items-center justify-center xl:justify-end">
- <div className="text-right space-y-4">
- <p className="text-sm font-black text-blue-700 uppercase tracking-[0.3em]">Dept Health Score</p>
- <div className="flex items-center gap-8 justify-end">
- <div className="h-6 w-80 shrink-0 bg-blue-200 rounded-full overflow-hidden border border-blue-300 shadow-inner">
+ <div className="flex flex-wrap gap-8 items-center justify-center xl:justify-end">
+ <div className="text-right space-y-1">
+ <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Health Score</p>
+ <div className="flex items-center gap-4 justify-end">
+ <div className="h-2 w-32 shrink-0 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
  <motion.div
  initial={{ width: 0 }}
  animate={{ width: `${data.metrics.ai_health_score}%` }}
- className="h-full bg-slate-600 shadow-[0_0_40px_rgba(148,171,144,0.8)]"
+ className="h-full bg-slate-600"
  ></motion.div>
  </div>
- <span className="text-7xl font-black text-blue-900  leading-none">{data.metrics.ai_health_score}</span>
+ <span className="text-2xl font-black text-slate-900 leading-none">{data.metrics.ai_health_score}</span>
  </div>
  </div>
 
- <div className="h-48 w-px bg-blue-300 hidden xl:block"></div>
+ <div className="h-10 w-px bg-slate-200 hidden xl:block"></div>
 
- <div className="flex flex-col items-end gap-4">
- <p className="text-xl font-black text-blue-700 uppercase tracking-[0.4em]">Placement Forecast</p>
- <div className="flex items-center gap-8 bg-blue-100 px-8 py-4 rounded-[2rem] border border-blue-300 shadow-xl">
- <TrendingUp className="h-10 w-10 shrink-0 text-slate-700" />
- <span className="text-6xl font-black text-blue-900  leading-none">{data.metrics.placement_forecast_percent}%</span>
+ <div className="flex flex-col items-end gap-1">
+ <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Placement Map</p>
+ <div className="flex items-center gap-3 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+ <TrendingUp className="h-3 w-3 shrink-0 text-slate-400" />
+ <span className="text-xl font-black text-slate-900 leading-none">{data.metrics.placement_forecast_percent}%</span>
  </div>
  </div>
 
  <motion.div
- animate={{ scale: [1, 1.05, 1] }}
+ animate={{ scale: [1, 1.02, 1] }}
  transition={{ duration: 3, repeat: Infinity }}
  className={cn(
- "px-10 py-6 rounded-3xl text-2xl font-black uppercase tracking-[0.4em] border-2 flex items-center gap-6 backdrop-blur-2xl shadow-2xl",
- data.metrics.stability_indicator === 'Stable' ? "bg-emerald-100 text-emerald-700 border-emerald-300" :
- data.metrics.stability_indicator === 'Monitoring' ? "bg-amber-100 text-amber-700 border-amber-300" :
- "bg-rose-100 text-rose-700 border-rose-300"
+ "px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border flex items-center gap-2 shadow-sm bg-white",
+ data.metrics.stability_indicator === 'Stable' ? "text-emerald-600 border-emerald-100" :
+ data.metrics.stability_indicator === 'Monitoring' ? "text-amber-600 border-amber-100" :
+ "text-rose-600 border-rose-100"
  )}>
- <Activity className="h-8 w-8 shrink-0" />
+ <Activity className="h-3 w-3 shrink-0" />
  {data.metrics.stability_indicator}
  </motion.div>
  </div>
@@ -221,57 +221,56 @@ export default function DepartmentalTab() {
 
  {/* SECTION 2: ACADEMIC CORE ANALYTICS */}
  {/* SECTION 2: ACADEMIC CORE ANALYTICS */}
- <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
-
- <div className="lg:col-span-4 flex flex-col gap-28">
- <Card className="neon-card flex-grow relative overflow-hidden group p-20 bg-gradient-to-br from-blue-50 to-white">
- <div className="absolute -top-16 -right-10 opacity-5 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-12">
- <TrendingUp className="h-96 w-96 shrink-0 text-slate-600 shrink-0" />
+ <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+ <div className="lg:col-span-4 flex flex-col gap-6">
+ <Card className="relative overflow-hidden group p-6 bg-white border border-slate-100 shadow-sm">
+ <div className="absolute -top-10 -right-10 opacity-5 transition-transform duration-700 group-hover:scale-110">
+ <TrendingUp className="h-40 w-40 shrink-0 text-slate-800" />
  </div>
- <div className="relative z-10 space-y-8">
- <div className="space-y-2">
- <span className="px-3 py-1 bg-slate-100 text-slate-700 text-[16px] font-bold uppercase tracking-widest border border-slate-300 rounded-full inline-block mb-2">Growth Intelligence</span>
- <h3 className="text-5xl font-bold  text-blue-900 leading-tight">Academic Momentum</h3>
+ <div className="relative z-10 space-y-4">
+ <div className="space-y-1">
+ <span className="px-2 py-0.5 bg-slate-50 text-slate-400 text-[8px] font-bold uppercase tracking-widest border border-slate-100 rounded-full inline-block mb-1">Growth Intelligence</span>
+ <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight">Academic Momentum</h3>
  </div>
- <div className="space-y-6">
- <div className="space-y-2">
- <div className="flex justify-between items-center text-base font-semibold text-blue-700 tracking-widest uppercase">
+ <div className="space-y-4">
+ <div className="space-y-1.5">
+ <div className="flex justify-between items-center text-[8px] font-bold text-slate-400 tracking-widest uppercase">
  <span>Growth Index</span>
- <span className="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">+12%</span>
+ <span className="text-emerald-600">+12%</span>
  </div>
- <div className="h-2 w-full bg-blue-200 rounded-full overflow-hidden">
- <motion.div initial={{ width: 0 }} animate={{ width: '82%' }} className="h-full bg-gradient-to-r from-emerald-600 to-emerald-500 shadow-[0_0_15px_rgba(5,150,105,0.6)]" />
+ <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
+ <motion.div initial={{ width: 0 }} animate={{ width: '82%' }} className="h-full bg-emerald-500" />
  </div>
  </div>
- <div className="space-y-2">
- <div className="flex justify-between items-center text-base font-semibold text-blue-700 tracking-widest uppercase">
+ <div className="space-y-1.5">
+ <div className="flex justify-between items-center text-[8px] font-bold text-slate-400 tracking-widest uppercase">
  <span>Consistency Score</span>
- <span className="text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-300">94%</span>
+ <span className="text-slate-900">94%</span>
  </div>
- <div className="h-2 w-full bg-blue-200 rounded-full overflow-hidden">
- <motion.div initial={{ width: 0 }} animate={{ width: '94%' }} className="h-full bg-gradient-to-r from-slate-600 to-slate-500 shadow-[0_0_15px_rgba(148,171,144,0.6)]" />
+ <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
+ <motion.div initial={{ width: 0 }} animate={{ width: '94%' }} className="h-full bg-slate-600" />
  </div>
  </div>
  </div>
- <div className="pt-6 border-t border-blue-300 grid grid-cols-2 gap-32">
- <div className="bg-blue-100 p-14 rounded-xl border border-blue-300">
- <p className="text-5xl font-black text-blue-900 ">8.01</p>
- <p className="text-base font-medium text-blue-700 uppercase tracking-widest mt-1">Avg CGPA</p>
+ <div className="pt-4 border-t border-slate-50 grid grid-cols-2 gap-4">
+ <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+ <p className="text-lg font-black text-slate-900">8.01</p>
+ <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Avg CGPA</p>
  </div>
- <div className="bg-blue-100 p-14 rounded-xl border border-blue-300">
- <p className="text-5xl font-black text-blue-900 ">6.5%</p>
- <p className="text-base font-medium text-blue-700 uppercase tracking-widest mt-1">Volatility</p>
+ <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+ <p className="text-lg font-black text-slate-900">6.5%</p>
+ <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Volatility</p>
  </div>
  </div>
  </div>
  </Card>
 
- <Card className="neon-card p-16 border-l-4 border-l-amber-600 bg-amber-50">
- <div className="flex items-center gap-5">
- <div className="h-24 w-24 rounded-xl bg-amber-100 border border-amber-400 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(217,119,6,0.2)]">
- <Sparkles className="h-12 w-12 shrink-0 text-amber-700 shrink-0" />
+ <Card className="p-4 border-l-2 border-l-amber-400 bg-amber-50/30 shadow-sm">
+ <div className="flex items-center gap-4">
+ <div className="h-10 w-10 rounded-lg bg-amber-100/50 flex items-center justify-center shrink-0">
+ <Sparkles className="h-4 w-4 text-amber-600" />
  </div>
- <p className="text-2xl font-medium text-amber-800 leading-relaxed">
+ <p className="text-xs font-bold text-amber-900 leading-snug">
  "Subject-wise external gap is narrowing, indicating improved pedagogical alignment."
  </p>
  </div>
@@ -281,29 +280,29 @@ export default function DepartmentalTab() {
 
 
  {/* SECTION 4: PLACEMENT INTELLIGENCE */}
- <div className="grid grid-cols-12 gap-12 mb-16">
+ <div className="grid grid-cols-12 gap-6 mb-6">
  <div className="col-span-12 xl:col-span-4">
- <Card className="p-10 h-full border border-blue-200 bg-blue-50 rounded-[3rem] w-full flex flex-col shadow-2xl">
- <div className="space-y-12 flex-1">
+ <Card className="p-6 h-full border border-slate-100 bg-slate-50/50 rounded-2xl w-full flex flex-col shadow-sm">
+ <div className="space-y-6 flex-1">
+ <div className="space-y-1">
+ <CardTitle className="text-xl font-black text-slate-900 uppercase">Placement Eligibility</CardTitle>
+ <CardDescription className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Opportunity Mapping</CardDescription>
+ </div>
+
  <div className="space-y-4">
- <CardTitle className="text-4xl font-black text-blue-900  uppercase">Placement Eligibility</CardTitle>
- <CardDescription className="text-xl font-bold text-blue-700 uppercase tracking-[0.4em]">Institutional Dream-Offer Mapping</CardDescription>
+ <EligibilityBar label="IT Services" value={82} icon={<Cpu className="h-4 w-4" />} color="blue" sub="TCS, Infosys Ready" />
+ <EligibilityBar label="Product / Dream" value={34} icon={<Sparkles className="h-4 w-4" />} color="amber" sub="Big Tech Pipeline" />
+ <EligibilityBar label="Core Engineering" value={48} icon={<Settings2 className="h-4 w-4" />} color="emerald" sub="Core Technical Depth" />
+ <EligibilityBar label="Higher Studies" value={data.advanced_ai.higher_studies_percent} icon={<GraduationCap className="h-4 w-4" />} color="purple" sub="Research Vectors" />
  </div>
 
- <div className="space-y-12">
- <EligibilityBar label="IT Services Companies" value={82} icon={<Cpu className="h-8 w-8" />} color="blue" sub="TCS, Infosys, Wipro Ready" />
- <EligibilityBar label="Product / Dream Companies" value={34} icon={<Sparkles className="h-8 w-8" />} color="amber" sub="Amazon, Google, Microsoft Pipeline" />
- <EligibilityBar label="Core Engineering Roles" value={48} icon={<Settings2 className="h-8 w-8" />} color="emerald" sub="Dept Specific Core Alignment" />
- <EligibilityBar label="Higher Studies / Research" value={data.advanced_ai.higher_studies_percent} icon={<GraduationCap className="h-8 w-8" />} color="purple" sub="GATE, GRE, Research Oriented" />
+ <div className="p-4 rounded-xl bg-white flex items-center justify-between border border-slate-100 shadow-sm mt-6">
+ <div className="space-y-1">
+ <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Stream Alignment</p>
+ <p className="text-xl font-black text-slate-900">42 Nodes</p>
  </div>
-
- <div className="p-10 rounded-[2.5rem] bg-white flex items-center justify-between border border-blue-200 shadow-2xl mt-12">
- <div className="space-y-2">
- <p className="text-sm font-black text-blue-600 uppercase tracking-widest">Company Eligibility Count</p>
- <p className="text-5xl font-black text-blue-900  leading-none">42 Streams</p>
- </div>
- <div className="h-24 w-24 shrink-0 rounded-[2rem] bg-indigo-50 border border-indigo-200 flex items-center justify-center shadow-xl">
- <Briefcase className="h-12 w-12 shrink-0 text-indigo-600" />
+ <div className="h-10 w-10 shrink-0 rounded-lg bg-teal-50 border border-teal-100 flex items-center justify-center">
+ <Briefcase className="h-4 w-4 text-teal-600" />
  </div>
  </div>
  </div>
@@ -311,33 +310,36 @@ export default function DepartmentalTab() {
  </div>
 
  <div className="col-span-12 xl:col-span-8">
- <Card className="p-10 h-full border border-blue-200 bg-white rounded-[3rem] w-full shadow-2xl">
- <div className="space-y-12">
- <div className="flex justify-between items-center">
- <div className="space-y-4">
- <CardTitle className="text-4xl font-black text-blue-900  uppercase">Skill Gap Analysis</CardTitle>
- <CardDescription className="text-xl font-bold text-blue-700 uppercase tracking-[0.4em]">Core vs. IT Readiness breakdown</CardDescription>
+ <Card className="p-6 h-full border border-slate-100 bg-white rounded-2xl w-full shadow-sm">
+ <div className="space-y-6">
+ <div className="flex justify-between items-start">
+ <div className="space-y-1">
+ <CardTitle className="text-xl font-black text-slate-900 uppercase">Skill Gap Analysis</CardTitle>
+ <CardDescription className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Core vs. IT Readiness</CardDescription>
  </div>
  <div className="text-right">
- <p className="text-sm font-black text-blue-600 uppercase tracking-widest">Dept skill score</p>
- <p className="text-7xl font-black text-emerald-600  leading-none">{data.metrics.skill_gap_index_core_it}%</p>
+ <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Dept Score</p>
+ <p className="text-2xl font-black text-emerald-600 leading-none">{data.metrics.skill_gap_index_core_it}%</p>
  </div>
  </div>
 
- <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
- <SkillMetricCard label="Coding Proficiency" value={data.metrics.coding_readiness} color="emerald" icon={<Cpu className="h-8 w-8" />} trend="+5.2%" />
- <SkillMetricCard label="Communication" value={data.metrics.communication_readiness} color="blue" icon={<Users className="h-8 w-8" />} trend="+2.1%" />
- <SkillMetricCard label="Aptitude & Logic" value={78.5} color="purple" icon={<Brain className="h-8 w-8" />} trend="+8.4%" />
- <SkillMetricCard label="Core Technical" value={data.metrics.core_skill_depth} color="amber" icon={<Settings2 className="h-8 w-8" />} trend="+3.0%" />
+ <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+ <SkillMetricCard label="Coding Proficiency" value={data.metrics.coding_readiness} color="emerald" icon={<Cpu className="h-4 w-4" />} trend="+5.2%" />
+ <SkillMetricCard label="Communication" value={data.metrics.communication_readiness} color="blue" icon={<Users className="h-4 w-4" />} trend="+2.1%" />
+ <SkillMetricCard label="Aptitude & Logic" value={78.5} color="purple" icon={<Brain className="h-4 w-4" />} trend="+8.4%" />
+ <SkillMetricCard label="Core Technical" value={data.metrics.core_skill_depth} color="amber" icon={<Settings2 className="h-4 w-4" />} trend="+3.0%" />
  </div>
 
- <div className="relative p-12 lg:p-16 rounded-[4rem] bg-indigo-50 overflow-hidden border-2 border-indigo-200 shadow-2xl shadow-indigo-500/10">
- <div className="relative z-10 space-y-10">
- <div className="flex items-center gap-12">
- <Lightbulb className="h-20 w-20 shrink-0 text-indigo-600" />
- <p className="text-3xl font-black uppercase tracking-[0.4em] text-indigo-700">AI Strategy Recommendation</p>
+ <div className="relative p-6 rounded-xl bg-slate-50 overflow-hidden border border-slate-100 shadow-inner">
+ <div className="absolute top-0 right-0 p-4 opacity-5">
+ <Lightbulb className="h-24 w-24 text-slate-900" />
  </div>
- <p className="text-4xl md:text-5xl font-black text-indigo-900 leading-tight ">
+ <div className="relative z-10 space-y-4">
+ <div className="flex items-center gap-3">
+ <Lightbulb className="h-5 w-5 text-indigo-600" />
+ <p className="text-[10px] font-black uppercase tracking-widest text-indigo-700">AI Strategy Node</p>
+ </div>
+ <p className="text-sm font-bold text-slate-900 leading-snug">
  "{data.weekly_insight || "Increase focus on coding bootcamps for 3rd Year students to capture the upcoming hiring surge."}"
  </p>
  </div>
@@ -350,57 +352,57 @@ export default function DepartmentalTab() {
 
 
  {/* SECTION 8: AI WEEKLY INTELLIGENCE REPORT */}
- <Card className="overflow-hidden border border-blue-200 bg-white rounded-[3rem] mb-16 w-full shadow-2xl">
+ <Card className="overflow-hidden border border-slate-100 bg-white rounded-2xl mb-8 w-full shadow-sm">
  <div className="grid grid-cols-12">
- <div className="col-span-12 xl:col-span-4 bg-indigo-50 text-indigo-900 p-16 relative overflow-hidden flex flex-col justify-between border-r border-blue-200">
- <div className="relative z-10 space-y-8">
- <span className="px-8 py-3 bg-indigo-100 text-indigo-700 font-black text-2xl uppercase tracking-widest rounded-full inline-block border border-indigo-300 shadow-sm">Automatic Report</span>
- <h2 className="text-6xl lg:text-8xl font-black uppercase  text-indigo-950 leading-tight">AI Weekly Intelligence</h2>
- <p className="text-2xl font-bold opacity-80 leading-relaxed text-indigo-800 uppercase tracking-widest">
- Institutional decision-ready summary generated using autonomous processing.
+ <div className="col-span-12 xl:col-span-4 bg-slate-50 text-slate-900 p-8 relative overflow-hidden flex flex-col justify-between border-r border-slate-100">
+ <div className="relative z-10 space-y-4">
+ <span className="px-3 py-1 bg-white text-indigo-600 font-bold text-[10px] uppercase tracking-widest rounded-full inline-block border border-slate-100 shadow-sm">Autonomous Report</span>
+ <h2 className="text-3xl font-black uppercase text-slate-900 leading-tight">Weekly Intelligence</h2>
+ <p className="text-[10px] font-bold opacity-60 leading-relaxed text-slate-500 uppercase tracking-widest">
+ Decision-ready summary processed via AI kernel.
  </p>
- <div className="flex flex-col gap-8 pt-12">
+ <div className="flex flex-col gap-3 pt-6">
  <Button 
  onClick={handleDownloadPDF}
  disabled={reportLoading}
- className="h-32 rounded-[2rem] bg-indigo-600 text-white hover:bg-indigo-700 font-black text-3xl lg:text-4xl uppercase tracking-widest shadow-2xl border-none flex items-center justify-center gap-6 transition-all"
+ className="h-10 rounded-xl bg-slate-900 text-white hover:bg-slate-800 font-bold text-xs uppercase tracking-widest shadow-sm flex items-center justify-center gap-2"
  >
- {reportLoading ? <Loader2 className="h-12 w-12 shrink-0 animate-spin" /> : <Download className="h-12 w-12 shrink-0" />} Download PDF Report
+ {reportLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />} Download PDF
  </Button>
  <Button 
  onClick={handleShareToHOD}
  disabled={reportLoading}
- variant="outline" className="h-24 rounded-[2rem] border-2 border-indigo-300 text-indigo-700 hover:bg-indigo-200 hover:text-indigo-900 font-black text-2xl uppercase tracking-widest flex items-center justify-center gap-6 transition-all bg-transparent"
+ variant="outline" className="h-10 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all bg-transparent"
  >
- <Share2 className="h-10 w-10 shrink-0" /> Share to HOD
+ <Share2 className="h-4 w-4" /> Share to HOD
  </Button>
  </div>
  </div>
  </div>
- <div className="col-span-12 xl:col-span-8 p-16 lg:p-24 flex flex-col justify-center bg-blue-50">
- <div className="space-y-16">
- <div className="space-y-6">
- <div className="flex items-center gap-10">
- <div className="h-24 w-24 shrink-0 border-2 border-blue-300 bg-white rounded-2xl flex items-center justify-center text-blue-600 shadow-xl">
- <Lightbulb className="h-12 w-12 shrink-0" />
+ <div className="col-span-12 xl:col-span-8 p-8 flex flex-col justify-center bg-slate-50/50">
+ <div className="space-y-8">
+ <div className="space-y-3">
+ <div className="flex items-center gap-4">
+ <div className="h-10 w-10 shrink-0 border border-slate-200 bg-white rounded-lg flex items-center justify-center text-slate-400 shadow-sm">
+ <Lightbulb className="h-5 w-5" />
  </div>
- <h5 className="text-5xl font-black text-blue-900 uppercase ">Strategic Summary</h5>
+ <h5 className="text-lg font-black text-slate-900 uppercase">Strategic Summary</h5>
  </div>
- <p className="text-4xl lg:text-5xl font-bold text-blue-800 leading-relaxed border-l-8 border-indigo-400 pl-16 py-6">
+ <p className="text-sm font-bold text-slate-600 leading-relaxed border-l-2 border-slate-200 pl-6 py-2 italic font-serif">
  "{data.weekly_report.summary}"
  </p>
  </div>
 
- <div className="h-px w-full bg-blue-200" />
+ <div className="h-px w-full bg-slate-100" />
 
- <div className="space-y-6">
- <div className="flex items-center gap-10">
- <div className="h-24 w-24 shrink-0 border-2 border-emerald-300 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 shadow-xl">
- <CheckCircle2 className="h-12 w-12 shrink-0" />
+ <div className="space-y-3">
+ <div className="flex items-center gap-4">
+ <div className="h-10 w-10 shrink-0 border border-slate-200 bg-white rounded-lg flex items-center justify-center text-emerald-600 shadow-sm">
+ <CheckCircle2 className="h-5 w-5" />
  </div>
- <h5 className="text-5xl font-black text-blue-900 uppercase ">Recommended Action</h5>
+ <h5 className="text-lg font-black text-slate-900 uppercase">Recommended Action</h5>
  </div>
- <p className="text-4xl lg:text-5xl font-bold text-emerald-800 leading-relaxed border-l-8 border-emerald-400 pl-16 py-6">
+ <p className="text-sm font-bold text-emerald-800 leading-relaxed border-l-2 border-emerald-200 pl-6 py-2">
  "{data.weekly_report.recommendation}"
  </p>
  </div>
@@ -410,64 +412,64 @@ export default function DepartmentalTab() {
  </Card>
 
  {/* SECTION 9: COMPARATIVE ANALYTICS */}
- <div className="space-y-12 mb-20 pt-10">
+ <div className="space-y-6 mb-8 pt-4">
  <div className="flex items-center justify-between">
- <div className="space-y-6">
- <h3 className="text-6xl font-black text-blue-900  uppercase">Comparative Performance Hub</h3>
- <p className="text-2xl font-bold text-blue-600 uppercase tracking-[0.4em]">Institutional benchmark vs Departmental Reality</p>
+ <div className="space-y-1">
+ <h3 className="text-2xl font-black text-slate-900 uppercase">Performance Hub</h3>
+ <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Institutional benchmark comparison</p>
  </div>
  </div>
 
- <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mt-12">
+ <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
  <div className="lg:col-span-8">
- <Card className="bg-white p-16 h-full border border-blue-200 rounded-[4rem] shadow-2xl">
- <div className="h-[600px] w-full">
+ <Card className="bg-white p-6 h-full border border-slate-100 rounded-2xl shadow-sm">
+ <div className="h-[300px] w-full">
  <ResponsiveContainer width="100%" height="100%">
- <BarChart data={data.comparative_analysis} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
- <CartesianGrid strokeDasharray="5 5" vertical={false} stroke="#E2E8F0" />
+ <BarChart data={data.comparative_analysis} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
+ <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
  <XAxis
  dataKey="metric"
  axisLine={false}
  tickLine={false}
- tick={{ fill: '#475569', fontSize: 22, fontWeight: 900 }}
+ tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 700 }}
  className="uppercase shrink-0"
  />
  <YAxis hide />
  <Tooltip
  cursor={{ fill: '#F1F5F9' }}
- contentStyle={{ backgroundColor: '#ffffff', borderRadius: '40px', border: '4px solid #E2E8F0', boxShadow: '0 40px 100px rgba(0,0,0,0.1)', padding: '40px', color: '#1e293b' }}
+ contentStyle={{ backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid #f1f5f9', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', padding: '10px', color: '#1e293b', fontSize: '10px' }}
  />
- <Legend iconType="circle" wrapperStyle={{ paddingTop: '60px', fontWeight: 900, textTransform: 'uppercase', fontSize: '20px', color: '#475569', letterSpacing: '0.2em' }} />
- <Bar dataKey="dept_value" name="Department" fill="#6366f1" radius={[16, 16, 16, 16]} barSize={120} />
- <Bar dataKey="inst_value" name="Institution" fill="#94a3b8" radius={[16, 16, 16, 16]} barSize={120} />
+ <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px', fontWeight: 700, textTransform: 'uppercase', fontSize: '10px', color: '#94a3b8', letterSpacing: '0.1em' }} />
+ <Bar dataKey="dept_value" name="Dept" fill="#0f172a" radius={[2, 2, 0, 0]} barSize={30} />
+ <Bar dataKey="inst_value" name="Institutional Avg" fill="#cbd5e1" radius={[2, 2, 0, 0]} barSize={30} />
  </BarChart>
  </ResponsiveContainer>
  </div>
  </Card>
  </div>
 
- <div className="lg:col-span-4 space-y-16">
- <Card className="bg-white p-16 border border-blue-200 rounded-[4rem] shadow-2xl overflow-hidden relative group">
- <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:opacity-20 transition-opacity">
- <Zap className="h-[20rem] w-[20rem] text-emerald-500" />
+ <div className="lg:col-span-4 space-y-6">
+ <Card className="bg-white p-6 border border-slate-100 rounded-2xl shadow-sm overflow-hidden relative group">
+ <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+ <Zap className="h-32 w-32 text-emerald-500" />
  </div>
- <div className="relative z-10 space-y-8">
- <p className="text-xl font-black text-emerald-600 uppercase tracking-[0.4em]">Outperforming Metric</p>
- <h4 className="text-6xl font-black text-blue-900  uppercase">Academic Consistency</h4>
- <p className="text-3xl font-bold text-blue-700 leading-relaxed">
- Currently 14% higher than institutional average. Maintaining hyper-stability across all clusters.
+ <div className="relative z-10 space-y-3">
+ <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Outperforming</p>
+ <h4 className="text-xl font-black text-slate-900 uppercase">Academic Consistency</h4>
+ <p className="text-xs font-medium text-slate-500 leading-relaxed">
+ Currently 14% higher than institutional average.
  </p>
  </div>
  </Card>
- <Card className="bg-white p-16 border border-blue-200 rounded-[4rem] shadow-2xl overflow-hidden relative group">
- <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:opacity-20 transition-opacity">
- <AlertTriangle className="h-[20rem] w-[20rem] text-amber-500" />
+ <Card className="bg-white p-6 border border-slate-100 rounded-2xl shadow-sm overflow-hidden relative group">
+ <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+ <AlertTriangle className="h-32 w-32 text-amber-500" />
  </div>
- <div className="relative z-10 space-y-8">
- <p className="text-xl font-black text-amber-600 uppercase tracking-[0.4em]">Lagging Metric</p>
- <h4 className="text-6xl font-black text-blue-900  uppercase">Skill Gap Narrowing</h4>
- <p className="text-3xl font-bold text-blue-700 leading-relaxed">
- Currently 3.2% below target. Recommendation: Increase department-wide hackathon frequency.
+ <div className="relative z-10 space-y-3">
+ <p className="text-[10px] font-bold text-amber-600 uppercase tracking-widest">At Risk/Lagging</p>
+ <h4 className="text-xl font-black text-slate-900 uppercase">Skill Gap Narrowing</h4>
+ <p className="text-xs font-medium text-slate-500 leading-relaxed">
+ Currently 3.2% below target. Recommendation: Increase department hackathons.
  </p>
  </div>
  </Card>
@@ -476,106 +478,101 @@ export default function DepartmentalTab() {
  </div>
 
  {/* BLOCK 10: DEPARTMENT STRATEGIC KPI PANEL */}
- <div className="grid grid-cols-1 md:grid-cols-5 gap-8 pt-16 border-t border-blue-200">
- <KPICard label="Graduation Rate" value={`${data.advanced_ai.graduation_rate}%`} icon={<GraduationCap className="h-6 w-6" />} />
- <KPICard label="Avg Placement Time" value={`${data.advanced_ai.avg_time_to_placement}m`} icon={<Clock className="h-6 w-6" />} />
- <KPICard label="Startup Founders" value={data.advanced_ai.startup_founders_count} icon={<Sparkles className="h-6 w-6" />} />
- <KPICard label="Research Papers" value={data.advanced_ai.research_paper_count} icon={<FileText className="h-6 w-6" />} />
- <KPICard label="Higher Studies" value={`${data.advanced_ai.higher_studies_percent}%`} icon={<Library className="h-6 w-6" />} />
+ <div className="grid grid-cols-2 md:grid-cols-5 gap-4 pt-8 border-t border-slate-100">
+ <KPICard label="Graduation" value={`${data.advanced_ai.graduation_rate}%`} icon={<GraduationCap className="h-4 w-4" />} />
+ <KPICard label="Placement" value={`${data.advanced_ai.avg_time_to_placement}m`} icon={<Clock className="h-4 w-4" />} />
+ <KPICard label="Founders" value={data.advanced_ai.startup_founders_count} icon={<Sparkles className="h-4 w-4" />} />
+ <KPICard label="Research" value={data.advanced_ai.research_paper_count} icon={<FileText className="h-4 w-4" />} />
+ <KPICard label="Studies" value={`${data.advanced_ai.higher_studies_percent}%`} icon={<Library className="h-4 w-4" />} />
  </div>
 
  {/* INTERVENTION MODAL */}
  <Dialog
  isOpen={interventionModal.isOpen}
  onClose={() => setInterventionModal({ isOpen: false, subject: null })}
- title="Strategic Academic Intervention"
- description="Automated remedial workflow for low-performing nodes"
+ title="Academic Intervention"
+ description="Remedial workflow for low-performing nodes"
  >
  {interventionModal.subject && (
- <div className="space-y-12 py-8 bg-white p-8 rounded-3xl">
- <div className="grid grid-cols-3 gap-8">
- <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200 shadow-sm">
- <p className="text-xs font-black uppercase text-blue-500 tracking-widest mb-2">Subject</p>
- <p className="text-xl font-bold text-blue-900 truncate leading-none uppercase">{interventionModal.subject.subject_name}</p>
+ <div className="space-y-6 py-4 bg-white p-4 rounded-xl">
+ <div className="grid grid-cols-3 gap-4">
+ <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 shadow-sm">
+ <p className="text-[8px] font-bold uppercase text-slate-400 tracking-widest mb-1">Subject</p>
+ <p className="text-xs font-bold text-slate-900 truncate uppercase">{interventionModal.subject.subject_name}</p>
  </div>
- <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200 shadow-sm">
- <p className="text-xs font-black uppercase text-blue-500 tracking-widest mb-2">Performance</p>
- <p className="text-4xl font-black text-rose-600 leading-none">{interventionModal.subject.pass_percentage}%</p>
+ <div className="bg-rose-50/50 p-3 rounded-lg border border-rose-100 shadow-sm">
+ <p className="text-[8px] font-bold uppercase text-rose-400 tracking-widest mb-1">Pass %</p>
+ <p className="text-xl font-black text-rose-600 leading-none">{interventionModal.subject.pass_percentage}%</p>
  </div>
- <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200 shadow-sm">
- <p className="text-xs font-black uppercase text-blue-500 tracking-widest mb-2">Backlog</p>
- <p className="text-4xl font-black text-amber-600 leading-none">{interventionModal.subject.backlog_rate}%</p>
+ <div className="bg-amber-50/50 p-3 rounded-lg border border-amber-100 shadow-sm">
+ <p className="text-[8px] font-bold uppercase text-amber-400 tracking-widest mb-1">Backlog</p>
+ <p className="text-xl font-black text-amber-600 leading-none">{interventionModal.subject.backlog_rate}%</p>
  </div>
  </div>
 
- <div className="space-y-4">
- <h4 className="text-sm font-bold uppercase text-blue-600 tracking-widest mb-4">Recommended Actions</h4>
+ <div className="space-y-2">
+ <h4 className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-2">Actions</h4>
 
  <Button
  onClick={() => {
- console.log(`Action: Schedule Remedial Classes for ${interventionModal.subject.subject_name}`);
  alert(`Remedial workflow initiated for ${interventionModal.subject.subject_name}`);
  }}
- className="w-full h-24 bg-white hover:bg-blue-50 border border-blue-200 text-blue-900 flex items-center justify-between px-8 rounded-2xl group transition-all shadow-md"
+ className="w-full h-12 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 flex items-center justify-between px-4 rounded-xl group transition-all"
  >
- <div className="flex items-center gap-6">
- <div className="h-16 w-16 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-200 shadow-sm">
- <Calendar className="h-8 w-8" />
+ <div className="flex items-center gap-4">
+ <div className="h-8 w-8 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 group-hover:text-slate-600">
+ <Calendar className="h-4 w-4" />
  </div>
  <div className="text-left">
- <p className="text-xl font-black uppercase  text-blue-900">Schedule Remedial Classes</p>
- <p className="text-xs text-blue-500 font-bold uppercase mt-1">Create extra sessions & notify faculty</p>
+ <p className="text-sm font-bold uppercase text-slate-900">Schedule Remedial</p>
  </div>
  </div>
- <ArrowUpRight className="h-8 w-8 text-blue-400 group-hover:text-blue-600 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+ <ArrowUpRight className="h-4 w-4 text-slate-300 group-hover:text-slate-900 transition-all" />
  </Button>
 
  <Button
- onClick={() => console.log(`Action: Assign Faculty Mentor for ${interventionModal.subject.subject_name}`)}
- className="w-full h-24 bg-white hover:bg-blue-50 border border-blue-200 text-blue-900 flex items-center justify-between px-8 rounded-2xl group transition-all shadow-md"
+ onClick={() => {}}
+ className="w-full h-12 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 flex items-center justify-between px-4 rounded-xl group transition-all"
  >
- <div className="flex items-center gap-6">
- <div className="h-16 w-16 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 group-hover:bg-emerald-200">
- <UserPlus className="h-8 w-8" />
+ <div className="flex items-center gap-4">
+ <div className="h-8 w-8 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 group-hover:text-slate-600">
+ <UserPlus className="h-4 w-4" />
  </div>
  <div className="text-left">
- <p className="text-xl font-black uppercase  text-blue-900">Assign Faculty Mentor</p>
- <p className="text-xs text-blue-500 font-bold uppercase mt-1">Link specialists to high-risk students</p>
+ <p className="text-sm font-bold uppercase text-slate-900">Assign Mentor</p>
  </div>
  </div>
- <ArrowUpRight className="h-8 w-8 text-blue-400 group-hover:text-emerald-600 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+ <ArrowUpRight className="h-4 w-4 text-slate-300 group-hover:text-slate-900 transition-all" />
  </Button>
 
  <Button
- onClick={() => console.log(`Action: Generate Study Plan for ${interventionModal.subject.subject_name}`)}
- className="w-full h-24 bg-white hover:bg-blue-50 border border-blue-200 text-blue-900 flex items-center justify-between px-8 rounded-2xl group transition-all shadow-md"
+ onClick={() => {}}
+ className="w-full h-12 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 flex items-center justify-between px-4 rounded-xl group transition-all"
  >
- <div className="flex items-center gap-6">
- <div className="h-16 w-16 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 group-hover:bg-purple-200">
- <Sparkles className="h-8 w-8" />
+ <div className="flex items-center gap-4">
+ <div className="h-8 w-8 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 group-hover:text-slate-600">
+ <Sparkles className="h-4 w-4" />
  </div>
  <div className="text-left">
- <p className="text-xl font-black uppercase  text-blue-900">Generate AI Study Plan</p>
- <p className="text-xs text-blue-500 font-bold uppercase mt-1">Autonomous weekly roadmap generation</p>
+ <p className="text-sm font-bold uppercase text-slate-900">AI Study Plan</p>
  </div>
  </div>
- <ArrowUpRight className="h-8 w-8 text-blue-400 group-hover:text-purple-600 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+ <ArrowUpRight className="h-4 w-4 text-slate-300 group-hover:text-slate-900 transition-all" />
  </Button>
 
  <Button
- onClick={() => console.log(`Action: Notify Students for ${interventionModal.subject.subject_name}`)}
- className="w-full h-24 bg-white hover:bg-blue-50 border border-blue-200 text-blue-900 flex items-center justify-between px-8 rounded-2xl group transition-all shadow-md"
+ onClick={() => {}}
+ className="w-full h-12 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 flex items-center justify-between px-4 rounded-xl group transition-all"
  >
- <div className="flex items-center gap-6">
- <div className="h-16 w-16 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-200">
- <Send className="h-8 w-8" />
+ <div className="flex items-center gap-4">
+ <div className="h-8 w-8 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 group-hover:text-slate-600">
+ <Send className="h-4 w-4" />
  </div>
  <div className="text-left">
- <p className="text-xl font-black uppercase  text-blue-900">Notify Affected Students</p>
- <p className="text-xs text-blue-500 font-bold uppercase mt-1">Broadcast alert to candidate dashboards</p>
+ <p className="text-sm font-bold uppercase text-slate-900">Notify Nodes</p>
  </div>
  </div>
- <ArrowUpRight className="h-8 w-8 text-blue-400 group-hover:text-blue-600 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+ <ArrowUpRight className="h-4 w-4 text-slate-300 group-hover:text-slate-900 transition-all" />
  </Button>
  </div>
  </div>
@@ -779,120 +776,120 @@ export default function DepartmentalTab() {
 // --- Helper UI Components ---
 
 function Badge({ children, color }: { children: string, color: string }) {
- const colors: any = {
- emerald: "bg-emerald-100 text-emerald-700 border-emerald-300",
- blue: "bg-blue-100 text-blue-700 border-blue-300",
- rose: "bg-rose-100 text-rose-700 border-rose-300",
- purple: "bg-purple-100 text-purple-700 border-purple-300"
- };
- return (
- <span className={cn("px-6 py-3 rounded-xl text-xl font-black uppercase tracking-[0.2em] border shadow-sm", colors[color])}>
- {children}
- </span>
- );
+  const colors: any = {
+    emerald: "bg-emerald-50 text-emerald-600 border-emerald-100",
+    blue: "bg-indigo-50 text-indigo-600 border-indigo-100",
+    rose: "bg-rose-50 text-rose-600 border-rose-100",
+    purple: "bg-purple-50 text-purple-600 border-purple-100"
+  };
+  return (
+    <span className={cn("px-2 py-0.5 rounded-md text-[8px] font-bold uppercase tracking-widest border shadow-sm", colors[color])}>
+      {children}
+    </span>
+  );
 }
 
 function SegmentProgress({ label, value, total, color }: any) {
- const colors: any = {
- rose: "bg-rose-500 shadow-[0_0_30px_rgba(244,63,94,0.3)]",
- blue: "bg-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.3)]",
- emerald: "bg-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.3)]",
- purple: "bg-purple-500 shadow-[0_0_30px_rgba(168,85,247,0.3)]"
- };
- const percent = Math.round((value / total) * 100);
- return (
- <div className="space-y-6">
- <div className="flex justify-between items-center text-3xl font-black uppercase tracking-[0.4em] text-blue-700">
- <span>{label}</span>
- <span className="text-blue-900 bg-blue-100 px-5 py-2 rounded-2xl border border-blue-200">{percent}%</span>
- </div>
- <div className="h-10 w-full bg-blue-200 border border-blue-300 overflow-hidden rounded-full shadow-inner">
- <motion.div initial={{ width: 0 }} animate={{ width: `${percent}%` }} className={cn("h-full rounded-full transition-all duration-1000", colors[color])} />
- </div>
- </div>
- );
+  const colors: any = {
+    rose: "bg-rose-500",
+    blue: "bg-indigo-500",
+    emerald: "bg-emerald-500",
+    purple: "bg-purple-500"
+  };
+  const percent = Math.round((value / total) * 100);
+  return (
+    <div className="space-y-1.5">
+      <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-tight text-slate-500">
+        <span>{label}</span>
+        <span className="text-slate-900 font-black">{percent}%</span>
+      </div>
+      <div className="h-1.5 w-full bg-slate-50 border border-slate-100 overflow-hidden rounded-full">
+        <motion.div initial={{ width: 0 }} animate={{ width: `${percent}%` }} className={cn("h-full rounded-full transition-all duration-1000", colors[color])} />
+      </div>
+    </div>
+  );
 }
 
 function EligibilityBar({ label, value, icon, color, sub }: any) {
- const barColors: any = {
- blue: "bg-blue-500 shadow-[0_0_40px_rgba(59,130,246,0.4)]",
- amber: "bg-amber-500 shadow-[0_0_40px_rgba(245,158,11,0.4)]",
- emerald: "bg-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.4)]",
- purple: "bg-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.4)]"
- };
- const iconColors: any = {
- blue: "text-blue-600 bg-blue-50 border-4 border-blue-200 shadow-blue-500/10",
- amber: "text-amber-600 bg-amber-50 border-4 border-amber-200 shadow-amber-500/10",
- emerald: "text-emerald-600 bg-emerald-50 border-4 border-emerald-200 shadow-emerald-500/10",
- purple: "text-purple-600 bg-purple-50 border-4 border-purple-200 shadow-purple-500/10"
- };
- return (
- <div className="space-y-8 bg-white p-12 rounded-[4rem] border border-blue-200 hover:border-slate-300 transition-all shadow-xl">
- <div className="flex justify-between items-center px-4">
- <div className="flex items-center gap-10">
- <div className={cn("h-40 w-40 rounded-[2.5rem] flex items-center justify-center shadow-lg", iconColors[color])}>
- {React.cloneElement(icon, { className: "h-20 w-20" })}
- </div>
- <div>
- <p className="font-black text-blue-900 text-5xl uppercase  leading-none">{label}</p>
- <p className="text-2xl font-black text-blue-600 uppercase tracking-[0.4em] mt-3">{sub}</p>
- </div>
- </div>
- <p className="text-7xl font-black text-blue-900 ">{value}%</p>
- </div>
- <div className="h-8 w-full bg-blue-100 border border-blue-200 overflow-hidden rounded-full shadow-inner">
- <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} className={cn("h-full rounded-full transition-all duration-1000", barColors[color])} />
- </div>
- </div>
- );
+  const barColors: any = {
+    blue: "bg-indigo-500",
+    amber: "bg-amber-500",
+    emerald: "bg-emerald-500",
+    purple: "bg-purple-500"
+  };
+  const iconColors: any = {
+    blue: "text-indigo-600 bg-indigo-50 border border-indigo-100",
+    amber: "text-amber-600 bg-amber-50 border border-amber-100",
+    emerald: "text-emerald-600 bg-emerald-50 border border-emerald-100",
+    purple: "text-purple-600 bg-purple-50 border border-purple-100"
+  };
+  return (
+    <div className="space-y-4 bg-white p-4 rounded-xl border border-slate-100 hover:border-slate-200 transition-all shadow-sm">
+      <div className="flex justify-between items-center px-1">
+        <div className="flex items-center gap-4">
+          <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center shadow-sm", iconColors[color])}>
+            {React.cloneElement(icon, { className: "h-5 w-5" })}
+          </div>
+          <div>
+            <p className="font-black text-slate-900 text-sm uppercase leading-none">{label}</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{sub}</p>
+          </div>
+        </div>
+        <p className="text-xl font-black text-slate-900">{value}%</p>
+      </div>
+      <div className="h-2 w-full bg-slate-50 border border-slate-100 overflow-hidden rounded-full">
+        <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} className={cn("h-full rounded-full transition-all duration-1000", barColors[color])} />
+      </div>
+    </div>
+  );
 }
 
 function SkillMetricCard({ label, value, color, icon, trend }: any) {
- const colors: any = {
- emerald: { bar: "bg-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.4)]", icon: "text-emerald-600 bg-emerald-50 border-4 border-emerald-200 shadow-emerald-500/10" },
- blue: { bar: "bg-indigo-500 shadow-[0_0_40px_rgba(99,102,241,0.4)]", icon: "text-indigo-600 bg-indigo-50 border-4 border-indigo-200 shadow-indigo-500/10" },
- purple: { bar: "bg-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.4)]", icon: "text-purple-600 bg-purple-50 border-4 border-purple-200 shadow-purple-500/10" },
- amber: { bar: "bg-amber-500 shadow-[0_0_40px_rgba(245,158,11,0.4)]", icon: "text-amber-600 bg-amber-50 border-4 border-amber-200 shadow-amber-500/10" }
- };
- return (
- <div className="p-16 rounded-[4rem] bg-white border-4 border-blue-200 hover:border-slate-400 hover:bg-blue-50 transition-all group shadow-2xl overflow-hidden relative">
- <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity text-blue-400">
- {React.cloneElement(icon, { className: "h-[20rem] w-[20rem]" })}
- </div>
- <div className="flex justify-between items-start mb-10 relative z-10">
- <div className={cn("h-36 w-36 rounded-2xl flex items-center justify-center transition-all shadow-xl", colors[color].icon)}>
- {React.cloneElement(icon, { className: "h-20 w-20" })}
- </div>
- <span className="text-3xl font-black text-emerald-700 bg-emerald-100 border-2 border-emerald-300 rounded-[2rem] px-8 py-3 flex items-center gap-6 group-hover:scale-110 transition-transform shadow-[0_0_40px_rgba(16,185,129,0.2)]">
- <TrendingUp className="h-8 w-8 shrink-0" />
- {trend}
- </span>
- </div>
- <div className="space-y-10 relative z-10">
- <div>
- <h5 className="text-4xl font-black text-blue-600 uppercase tracking-[0.4em] mb-4">{label}</h5>
- <p className="text-9xl font-black text-blue-900  drop-shadow-xl">{value}%</p>
- </div>
- <div className="h-10 w-full bg-blue-100 rounded-full overflow-hidden border-2 border-blue-200 shadow-inner mt-4">
- <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} className={cn("h-full rounded-full transition-all duration-1000", colors[color].bar)} />
- </div>
- </div>
- </div>
- );
+  const colors: any = {
+    emerald: { bar: "bg-emerald-500", icon: "text-emerald-600 bg-emerald-50 border border-emerald-100" },
+    blue: { bar: "bg-indigo-500", icon: "text-indigo-600 bg-indigo-50 border border-indigo-100" },
+    purple: { bar: "bg-purple-500", icon: "text-purple-600 bg-purple-50 border border-purple-100" },
+    amber: { bar: "bg-amber-500", icon: "text-amber-600 bg-amber-50 border border-amber-100" }
+  };
+  return (
+    <div className="p-6 rounded-2xl bg-white border border-slate-100 hover:border-slate-200 hover:bg-slate-50/50 transition-all group shadow-sm overflow-hidden relative">
+      <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity text-slate-400">
+        {React.cloneElement(icon, { className: "h-24 w-24" })}
+      </div>
+      <div className="flex justify-between items-start mb-6 relative z-10">
+        <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center transition-all shadow-sm", colors[color].icon)}>
+          {React.cloneElement(icon, { className: "h-5 w-5" })}
+        </div>
+        <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-lg px-2 py-0.5 flex items-center gap-1.5 transition-transform shadow-sm">
+          <TrendingUp className="h-3 w-3" />
+          {trend}
+        </span>
+      </div>
+      <div className="space-y-4 relative z-10">
+        <div>
+          <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{label}</h5>
+          <p className="text-3xl font-black text-slate-900">{value}%</p>
+        </div>
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+          <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} className={cn("h-full rounded-full transition-all duration-1000", colors[color].bar)} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function KPICard({ label, value, icon }: any) {
- return (
- <div className="flex items-center gap-6 p-6 rounded-2xl bg-white border border-blue-200 group hover:border-blue-400 transition-all shadow-md hover:shadow-lg">
- <div className="h-16 w-16 shrink-0 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-100 transition-all">
- {React.cloneElement(icon, { className: "h-8 w-8" })}
- </div>
- <div className="space-y-1">
- <p className="text-xs font-black text-blue-500 uppercase tracking-widest">{label}</p>
- <p className="text-3xl font-black text-blue-900  leading-none">{value}</p>
- </div>
- </div>
- );
+  return (
+    <div className="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-100 group hover:border-slate-200 transition-all shadow-sm">
+      <div className="h-10 w-10 shrink-0 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-slate-600 group-hover:bg-slate-100 transition-all">
+        {React.cloneElement(icon, { className: "h-4 w-4" })}
+      </div>
+      <div className="space-y-0.5">
+        <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{label}</p>
+        <p className="text-lg font-black text-slate-900 leading-none">{value}</p>
+      </div>
+    </div>
+  );
 }
 
 function RocketIcon() {

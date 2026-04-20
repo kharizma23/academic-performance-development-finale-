@@ -18,7 +18,7 @@ export default function AIAlertsTab() {
   const getApiUrl = (path: string) => {
     const hostname = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
     const apiHost = hostname === 'localhost' ? '127.0.0.1' : hostname;
-    return `http://${apiHost}:8000${path}`;
+    return `http://${apiHost}:8001${path}`;
   };
 
   const fetchAlerts = async () => {
@@ -111,18 +111,18 @@ export default function AIAlertsTab() {
           <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-3">
             <History className="h-4 w-4 text-slate-600" /> Audit Log
           </h3>
-          <Card className="p-5 rounded-xl bg-slate-900 border border-slate-800 text-white shadow-sm">
+          <Card className="p-5 rounded-xl bg-indigo-600 border border-indigo-500 text-white shadow-lg shadow-indigo-100">
             <div className="space-y-6">
               {displayData.history?.map((log: any, i: number) => (
                 <div key={i} className="space-y-1 relative pl-6 border-l border-indigo-600">
                   <div className="absolute -left-1.5 top-0 h-3 w-3 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />
-                  <p className="text-[8px] font-bold text-indigo-400 uppercase tracking-widest">{log.date}</p>
-                  <p className="text-[10px] font-bold text-slate-100 uppercase leading-tight">{log.event}</p>
-                  <span className="inline-block mt-1 px-2 py-0.5 text-[7px] font-black uppercase text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-sm">{log.status}</span>
+                  <p className="text-[8px] font-bold text-indigo-300 uppercase tracking-widest">{log.date}</p>
+                  <p className="text-[10px] font-bold text-white uppercase leading-tight">{log.event}</p>
+                  <span className="inline-block mt-1 px-2 py-0.5 text-[7px] font-black uppercase text-emerald-300 bg-emerald-500/20 border border-emerald-400/20 rounded-sm">{log.status}</span>
                 </div>
               ))}
             </div>
-            <Button variant="ghost" className="w-full mt-6 h-8 text-[9px] font-bold uppercase tracking-widest text-slate-400 hover:bg-white/5 p-0">Download Audit Log</Button>
+            <Button variant="ghost" className="w-full mt-6 h-8 text-[9px] font-bold uppercase tracking-widest text-indigo-200 hover:bg-white/10 hover:text-white p-0">Download Audit Log</Button>
           </Card>
         </div>
       </div>

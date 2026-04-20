@@ -40,7 +40,27 @@ def get_my_students(
     if year:
         query = query.filter(models.Student.year == year)
     
-    return query.all()
+    students = query.all()
+    
+    # Manually populate name from linked User profile
+    result = []
+    for s in students:
+        full_name = (s.user.full_name if s.user else None) or "Student"
+        result.append({
+            "id": s.id,
+            "user_id": s.user_id,
+            "name": full_name,
+            "roll_number": s.roll_number,
+            "department": s.department,
+            "year": s.year,
+            "current_cgpa": s.current_cgpa,
+            "attendance_percentage": s.attendance_percentage,
+            "risk_level": s.risk_level,
+            "coding_score": s.coding_score,
+            "aptitude_score": s.aptitude_score,
+            "communication_score": s.communication_score
+        })
+    return result
 
 @router.get("/evaluated-students", response_model=List[str])
 def get_evaluated_students(
@@ -113,3 +133,117 @@ def submit_feedback(
 
     db.commit()
     return {"message": "Feedback submitted successfully", "overall_rating": overall}
+
+@router.get("/stats")
+def get_staff_stats(
+    year: Optional[int] = None,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_active_user)
+):
+    staff = db.query(models.Staff).filter(models.Staff.user_id == current_user.id).first()
+    query = db.query(models.Student).filter(models.Student.department == staff.department)
+    if year:
+        query = query.filter(models.Student.year == year)
+    
+    students = query.all()
+    avg_cgpa = sum(s.current_cgpa for s in students) / len(students) if students else 0
+    high_risk = len([s for s in students if s.risk_level == "High"])
+    
+    return {
+        "total_students": len(students),
+        "avg_cgpa": round(avg_cgpa, 2),
+        "high_risk_count": high_risk,
+        "department": staff.department
+    }
+
+@router.get("/performance")
+def get_performance_trends(
+    year: Optional[int] = None,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_active_user)
+):
+    # Mock trend data for charts
+    return [
+        {"name": "Sem 1", "avg": 7.2},
+        {"name": "Sem 2", "avg": 7.5},
+        {"name": "Sem 3", "avg": 7.8},
+        {"name": "Sem 4", "avg": 7.6},
+        {"name": "Sem 5", "avg": 8.1},
+        {"name": "Sem 6", "avg": 8.4},
+    ]
+
+@router.post("/tests")
+def create_institutional_test(
+    test_in: schemas.AIAssessmentCreate,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_active_user)
+):
+    staff = db.query(models.Staff).filter(models.Staff.user_id == current_user.id).first()
+    new_test = models.AIAssessment(
+        title=test_in.title,
+        subject=test_in.subject,
+        faculty_id=current_user.id,
+        department=staff.department,
+        year=test_in.year,
+        difficulty=test_in.difficulty,
+        duration=test_in.duration
+    )
+    db.add(new_test)
+    db.commit()
+    return {"message": "Institutional assessment deployed successfully"}
+
+@router.get("/student/{student_id}")
+def get_student_detail(
+    student_id: str,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_active_user)
+):
+    if current_user.role != models.UserRole.FACULTY:
+        raise HTTPException(status_code=403, detail="Only faculty can access this")
+    
+    staff = db.query(models.Staff).filter(models.Staff.user_id == current_user.id).first()
+    if not staff:
+        raise HTTPException(status_code=404, detail="Staff profile not found")
+    
+    student = db.query(models.Student).filter(
+        models.Student.id == student_id,
+        models.Student.department == staff.department
+    ).first()
+    
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found in your department")
+    
+    # Resolve name from User relationship
+    full_name = (student.user.full_name if student.user else None) or "Student"
+    return {
+        "id": student.id,
+        "name": full_name,
+        "roll_number": student.roll_number or student.id,
+        "department": student.department or staff.department,
+        "year": student.year or 1,
+        "current_cgpa": student.current_cgpa or 0.0,
+        "attendance_percentage": student.attendance_percentage or 0.0,
+        "risk_level": student.risk_level or "Low",
+        "coding_score": student.coding_score or 0.0,
+        "aptitude_score": student.aptitude_score or 0.0,
+        "communication_score": student.communication_score or 0.0,
+    }
+
+@router.get("/intelligence")
+def get_class_intelligence(
+    year: Optional[int] = None,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_active_user)
+):
+    staff = db.query(models.Staff).filter(models.Staff.user_id == current_user.id).first()
+    query = db.query(models.Student).filter(models.Student.department == staff.department)
+    if year:
+        query = query.filter(models.Student.year == year)
+    
+    students = query.order_by(models.Student.current_cgpa.desc()).all()
+    
+    return {
+        "top_performers": [s.name for s in students[:5]],
+        "risk_list": [s.name for s in students if s.risk_level == "High"],
+        "rank_list": [{"name": s.name, "cgpa": s.current_cgpa} for s in students]
+    }
