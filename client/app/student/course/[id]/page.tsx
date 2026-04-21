@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { 
   Play, FileText, CheckCircle2, ChevronLeft, 
   Loader2, Zap, BrainCircuit, MessageSquare, 
-  Send, Maximize2, Award
+  Send, Maximize2, Award, X
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"

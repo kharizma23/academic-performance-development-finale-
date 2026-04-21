@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Send, Bot, User, Sparkles, PlusCircle, CheckCircle, Brain, BookOpen, Layers, Target, Users, Loader2 } from "lucide-react";
 import { robustFetch } from "@/lib/cache";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface Message {
  role: "user" | "ai";

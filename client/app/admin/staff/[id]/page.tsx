@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { 
-  Users, Mail, Phone, BookOpen, award, Shield, 
+  Users, Mail, Phone, BookOpen, Award, Shield, 
   ChevronLeft, BarChart3, Globe, ExternalLink, 
   Copy, CheckCheck, Eye, EyeOff, Trash2, Edit3,
   Book, PieChart, TrendingUp
@@ -198,14 +198,14 @@ export default function StaffProfilePage() {
             {/* KPI Metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { label: "Experience", value: `${staff.experience_years}Y`, icon: <TrendingUp />, color: "bg-indigo-50 text-indigo-600" },
-                { label: "Publications", value: staff.publications_count, icon: <Book />, color: "bg-emerald-50 text-emerald-600" },
-                { label: "Handled Units", value: staff.handled_subjects.length, icon: <BookOpen />, color: "bg-amber-50 text-amber-600" },
-                { label: "SDR Score", value: "94.2", icon: <TrendingUp />, color: "bg-rose-50 text-rose-600" }
+                { label: "Experience", value: `${staff.experience_years}Y`, icon: <TrendingUp size={18} />, color: "bg-indigo-50 text-indigo-600" },
+                { label: "Publications", value: staff.publications_count, icon: <Book size={18} />, color: "bg-emerald-50 text-emerald-600" },
+                { label: "Handled Units", value: staff.handled_subjects.length, icon: <BookOpen size={18} />, color: "bg-amber-50 text-amber-600" },
+                { label: "SDR Score", value: "94.2", icon: <TrendingUp size={18} />, color: "bg-rose-50 text-rose-600" }
               ].map((m, i) => (
                 <Card key={i} className="p-5 border-none shadow-sm rounded-2xl flex flex-col items-center justify-center text-center">
                   <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center mb-3", m.color)}>
-                    {React.cloneElement(m.icon as React.ReactElement, { size: 18 })}
+                    {m.icon}
                   </div>
                   <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">{m.label}</p>
                   <p className="text-xl font-black text-slate-900">{m.value}</p>

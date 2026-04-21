@@ -92,3 +92,6 @@ out/
 build/
 next-env.d.ts
 .turbo/
+
+.vercel
+.env*.local

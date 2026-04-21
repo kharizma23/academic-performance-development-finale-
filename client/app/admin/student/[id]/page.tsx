@@ -407,7 +407,7 @@ export default function StudentProfilePage({ params }: StudentProfilePageProps) 
                          </tr>
                       </thead>
                       <tbody>
-                         {subjectPerformance.map((sub, i) => (
+                         {subjectPerformance.map((sub: any, i: number) => (
                             <tr key={i} className="border-b border-slate-50 hover:bg-slate-50/30 transition-colors">
                                <td className="py-4 px-6 text-[11px] font-black text-slate-900 uppercase">{sub.subject}</td>
                                <td className="py-4 px-6 text-center">

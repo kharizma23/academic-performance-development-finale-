@@ -354,7 +354,7 @@ export default function RiskContribution({ riskData, onSelectFaculty }: Props) {
                   dataKey="risk_students" 
                   radius={[4, 4, 0, 0]} 
                   barSize={40}
-                  onClick={(data) => fetchDetails(data.id)}
+                  onClick={(data) => data?.id && fetchDetails(data.id as string)}
                   className="cursor-pointer transition-all hover:opacity-80"
                 >
                   {enhancedRiskData.map((r, i) => (
