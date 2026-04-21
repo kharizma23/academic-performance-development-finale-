@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.env
+
+# Logs
+*.log
+seed_log*.txt
+quota_test.txt
+
+# Scratch scripts (keep important DB)
+scratch/
+
+# Exclude small test DBs but keep the main one
+academic.db
+academic_platform.db
+local_platform.db
+student_platform.db
